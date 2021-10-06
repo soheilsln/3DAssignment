@@ -4,15 +4,70 @@ using UnityEngine;
 
 public class RandomMazeGenerator : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static RandomMazeGenerator instance;
+
+    [SerializeField]
+    private int width = 10;
+    [SerializeField]
+    private int height = 10;
+
+    void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        if (instance == this)
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        if (width == 0)
+        {
+            width = 1;
+        }
+        if (height == 0)
+        {
+            height = 1;
+        }
+
+        GenerateRandomMaze(width, height);
     }
+
+    private void GenerateRandomMaze(int width, int height)
+    {
+        int ILocation = 0;
+        int JLocation = 0;
+
+        //Initialize the array
+        Cell[,] cells = new Cell[width, height];
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                cells[i, j] = new Cell();
+            }
+        }
+
+        //Start from a random cell
+        ILocation = Random.Range(0, width);
+        JLocation = Random.Range(0, height);
+    }
+
+    private class Cell
+    {
+        public bool hasLeftWall = true;
+        public bool hasDownWall = true;
+        public bool hasRightWall = true;
+        public bool hasUpWall = true;
+        public bool isVisited = false;
+    }
+
 }
