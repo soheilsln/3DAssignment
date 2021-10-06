@@ -56,12 +56,25 @@ public class RandomMazeGenerator : MonoBehaviour
             }
         }
 
+        //Backtracking Generator Algorithm
         //Start from a random cell
         ILocation = Random.Range(0, width);
         JLocation = Random.Range(0, height);
+
+        //
     }
 
-    private class Cell
+    public void VisitNewCell(Cell[,] cells, int i, int j)
+    {
+        cells[i, j].isVisited = true;
+        if(cells[i,j].hasLeftWall == false && cells[i, j].hasLeftWall == false && cells[i, j].hasLeftWall == false && cells[i, j].hasLeftWall == false)
+        {
+            return;
+        }
+        //To Do
+    }
+
+    public class Cell
     {
         public bool hasLeftWall = true;
         public bool hasDownWall = true;
