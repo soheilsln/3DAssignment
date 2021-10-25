@@ -11,6 +11,8 @@ public class RandomMazeGenerator : MonoBehaviour
     private int width = 10;
     [SerializeField]
     private int height = 10;
+    [HideInInspector]
+    public Cell[,] cells;
 
     void Awake()
     {
@@ -30,16 +32,17 @@ public class RandomMazeGenerator : MonoBehaviour
 
     void Start()
     {
-        if (width == 0)
+        if (width <= 0)
         {
             width = 1;
         }
-        if (height == 0)
+        if (height <= 0)
         {
             height = 1;
         }
 
         GenerateRandomMaze(width, height);
+        //Debug.Log(cells[0, 0].isVisited + " " + cells[0,0].hasWalls[3]);
     }
 
     private void GenerateRandomMaze(int width, int height)
@@ -48,7 +51,7 @@ public class RandomMazeGenerator : MonoBehaviour
         int JLocation = 0;
 
         //Initialize the array
-        Cell[,] cells = new Cell[width, height];
+        cells = new Cell[width, height];
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -62,18 +65,17 @@ public class RandomMazeGenerator : MonoBehaviour
         ILocation = Random.Range(0, width);
         JLocation = Random.Range(0, height);
         VisitNewCell(cells, ILocation, JLocation);
-        //
     }
 
     public void VisitNewCell(Cell[,] cells, int i, int j)
     {
-        Debug.Log((i + 1) + " " + (j + 1));
+        //Debug.Log((i + 1) + " " + (j + 1));
         cells[i, j].isVisited = true;
         if (!HaveAdjacentAvailableCell(cells, i, j))
         {
             return;
         }
-        while(HaveAdjacentAvailableCell(cells, i, j))
+        while (HaveAdjacentAvailableCell(cells, i, j))
         {
             bool wallFound = false;
             while (!wallFound)
@@ -84,25 +86,29 @@ public class RandomMazeGenerator : MonoBehaviour
                     if (selectedWall == 0 && i > 0 && !cells[i - 1, j].isVisited)
                     {
                         wallFound = true;
-                        cells[i, j].hasWalls[selectedWall] = false;
+                        cells[i, j].hasWalls[0] = false;
+                        cells[i - 1, j].hasWalls[2] = false;
                         VisitNewCell(cells, i - 1, j);
                     }
                     else if (selectedWall == 1 && j > 0 && !cells[i, j - 1].isVisited)
                     {
                         wallFound = true;
-                        cells[i, j].hasWalls[selectedWall] = false;
+                        cells[i, j].hasWalls[1] = false;
+                        cells[i, j - 1].hasWalls[3] = false;
                         VisitNewCell(cells, i, j - 1);
                     }
                     else if (selectedWall == 2 && i + 1 < width && !cells[i + 1, j].isVisited)
                     {
                         wallFound = true;
-                        cells[i, j].hasWalls[selectedWall] = false;
+                        cells[i, j].hasWalls[2] = false;
+                        cells[i + 1, j].hasWalls[0] = false;
                         VisitNewCell(cells, i + 1, j);
                     }
                     else if (selectedWall == 3 && j + 1 < height && !cells[i, j + 1].isVisited)
                     {
                         wallFound = true;
-                        cells[i, j].hasWalls[selectedWall] = false;
+                        cells[i, j].hasWalls[3] = false;
+                        cells[i, j + 1].hasWalls[1] = false;
                         VisitNewCell(cells, i, j + 1);
                     }
                 }
