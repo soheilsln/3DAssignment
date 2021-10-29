@@ -15,6 +15,7 @@ public class RandomMazeGenerator : MonoBehaviour
     public Cell[,] cells;
 
     public GameObject floorPrefab;
+    public GameObject wallPrefab;
 
     void Awake()
     {
@@ -44,17 +45,19 @@ public class RandomMazeGenerator : MonoBehaviour
         }
 
         CreateFloor();
-        GenerateRandomMaze(width, height);
-        //Debug.Log(cells[0, 0].isVisited + " " + cells[0,0].hasWalls[3]);
+        GenerateRandomMazeMatrix(width, height);
+        CreateMaze(cells);
     }
+
 
     private void CreateFloor()
     {
-        GameObject floor = Instantiate(floorPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject floor = Instantiate(floorPrefab, new Vector3(width / 2f, 0, height / 2f), Quaternion.identity);
         floor.transform.localScale = new Vector3(width, floor.transform.localScale.y, height);
+        floor.name = "Floor";
     }
 
-    private void GenerateRandomMaze(int width, int height)
+    private void GenerateRandomMazeMatrix(int width, int height)
     {
         int ILocation = 0;
         int JLocation = 0;
@@ -138,6 +141,35 @@ public class RandomMazeGenerator : MonoBehaviour
         else if (j + 1 < height && !cells[i, j + 1].isVisited)
             return true;
         return false;
+    }
+
+    private void CreateMaze(Cell[,] cells)
+    {
+        GameObject walls = new GameObject();
+        walls.name = "Walls";
+        bool[] currentWalls;
+        for (int i = 0; i < width; i++)
+            for (int j = 0; j < height; j++)
+            {
+                currentWalls = cells[i, j].hasWalls;
+                for (int k = 0; k < 4; k++)
+                {
+                    if (currentWalls[k])
+                    {
+                        if (k == 1 || k == 3)
+                        {
+                            GameObject wall = Instantiate(wallPrefab, walls.transform);
+                            wall.transform.position = new Vector3(0.5f + i, wall.transform.position.y, j);
+                        }
+                        else
+                        {
+                            GameObject wall = Instantiate(wallPrefab, walls.transform);
+                            wall.transform.position = new Vector3(i, wall.transform.position.y, j + 0.5f);
+                            wall.transform.rotation = Quaternion.Euler(wall.transform.rotation.x, 90, wall.transform.rotation.z);
+                        }
+                    }
+                }
+            }
     }
 
     public class Cell
