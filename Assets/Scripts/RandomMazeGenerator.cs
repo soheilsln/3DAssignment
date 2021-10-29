@@ -14,6 +14,8 @@ public class RandomMazeGenerator : MonoBehaviour
     [HideInInspector]
     public Cell[,] cells;
 
+    public GameObject floorPrefab;
+
     void Awake()
     {
         if (instance == null)
@@ -41,8 +43,15 @@ public class RandomMazeGenerator : MonoBehaviour
             height = 1;
         }
 
+        CreateFloor();
         GenerateRandomMaze(width, height);
         //Debug.Log(cells[0, 0].isVisited + " " + cells[0,0].hasWalls[3]);
+    }
+
+    private void CreateFloor()
+    {
+        GameObject floor = Instantiate(floorPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        floor.transform.localScale = new Vector3(width, floor.transform.localScale.y, height);
     }
 
     private void GenerateRandomMaze(int width, int height)
