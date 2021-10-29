@@ -312,11 +312,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4005226164030931353, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: width
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4005226164030931353, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: height
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005226164030931353, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
+      propertyPath: lenght
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4005226164030931353, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: wallPrefab

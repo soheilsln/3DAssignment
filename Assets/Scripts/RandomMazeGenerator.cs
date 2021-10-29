@@ -10,7 +10,7 @@ public class RandomMazeGenerator : MonoBehaviour
     [SerializeField]
     private int width = 10;
     [SerializeField]
-    private int height = 10;
+    private int lenght = 10;
     [HideInInspector]
     public Cell[,] cells;
 
@@ -39,21 +39,21 @@ public class RandomMazeGenerator : MonoBehaviour
         {
             width = 1;
         }
-        if (height <= 0)
+        if (lenght <= 0)
         {
-            height = 1;
+            lenght = 1;
         }
 
         CreateFloor();
-        GenerateRandomMazeMatrix(width, height);
+        GenerateRandomMazeMatrix(width, lenght);
         CreateMaze(cells);
     }
 
 
     private void CreateFloor()
     {
-        GameObject floor = Instantiate(floorPrefab, new Vector3(width / 2f, 0, height / 2f), Quaternion.identity);
-        floor.transform.localScale = new Vector3(width, floor.transform.localScale.y, height);
+        GameObject floor = Instantiate(floorPrefab, new Vector3(width / 2f, 0, lenght / 2f), Quaternion.identity);
+        floor.transform.localScale = new Vector3(width, floor.transform.localScale.y, lenght);
         floor.name = "Floor";
     }
 
@@ -77,7 +77,9 @@ public class RandomMazeGenerator : MonoBehaviour
         ILocation = Random.Range(0, width);
         JLocation = Random.Range(0, height);
         VisitNewCell(cells, ILocation, JLocation);
+        CleanCells(cells);
     }
+
 
     public void VisitNewCell(Cell[,] cells, int i, int j)
     {
@@ -116,7 +118,7 @@ public class RandomMazeGenerator : MonoBehaviour
                         cells[i + 1, j].hasWalls[0] = false;
                         VisitNewCell(cells, i + 1, j);
                     }
-                    else if (selectedWall == 3 && j + 1 < height && !cells[i, j + 1].isVisited)
+                    else if (selectedWall == 3 && j + 1 < lenght && !cells[i, j + 1].isVisited)
                     {
                         wallFound = true;
                         cells[i, j].hasWalls[3] = false;
@@ -138,9 +140,22 @@ public class RandomMazeGenerator : MonoBehaviour
             return true;
         else if (i + 1 < width && !cells[i + 1, j].isVisited)
             return true;
-        else if (j + 1 < height && !cells[i, j + 1].isVisited)
+        else if (j + 1 < lenght && !cells[i, j + 1].isVisited)
             return true;
         return false;
+    }
+
+    //Deletes duplicate walls
+    private void CleanCells(Cell[,] cells)
+    {
+        for (int i = 0; i < width; i++)
+            for (int j = 0; j < lenght; j++)
+            {
+                if (cells[i, j].hasWalls[0] && i > 0)
+                    cells[i - 1, j].hasWalls[2] = false;
+                if (cells[i, j].hasWalls[1] && j > 0)
+                    cells[i, j - 1].hasWalls[3] = false;
+            }
     }
 
     private void CreateMaze(Cell[,] cells)
@@ -149,23 +164,34 @@ public class RandomMazeGenerator : MonoBehaviour
         walls.name = "Walls";
         bool[] currentWalls;
         for (int i = 0; i < width; i++)
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < lenght; j++)
             {
                 currentWalls = cells[i, j].hasWalls;
                 for (int k = 0; k < 4; k++)
                 {
                     if (currentWalls[k])
                     {
-                        if (k == 1 || k == 3)
-                        {
-                            GameObject wall = Instantiate(wallPrefab, walls.transform);
-                            wall.transform.position = new Vector3(0.5f + i, wall.transform.position.y, j);
-                        }
-                        else
+                        if (k == 0)
                         {
                             GameObject wall = Instantiate(wallPrefab, walls.transform);
                             wall.transform.position = new Vector3(i, wall.transform.position.y, j + 0.5f);
                             wall.transform.rotation = Quaternion.Euler(wall.transform.rotation.x, 90, wall.transform.rotation.z);
+                        }
+                        else if (k == 1)
+                        {
+                            GameObject wall = Instantiate(wallPrefab, walls.transform);
+                            wall.transform.position = new Vector3(0.5f + i, wall.transform.position.y, j);
+                        }
+                        else if (k == 2)
+                        {
+                            GameObject wall = Instantiate(wallPrefab, walls.transform);
+                            wall.transform.position = new Vector3(i + 1, wall.transform.position.y, j + 0.5f);
+                            wall.transform.rotation = Quaternion.Euler(wall.transform.rotation.x, 90, wall.transform.rotation.z);
+                        }
+                        else
+                        {
+                            GameObject wall = Instantiate(wallPrefab, walls.transform);
+                            wall.transform.position = new Vector3(0.5f + i, wall.transform.position.y, j + 1);
                         }
                     }
                 }
