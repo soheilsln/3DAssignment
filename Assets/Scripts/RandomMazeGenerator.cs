@@ -10,7 +10,7 @@ public class RandomMazeGenerator : MonoBehaviour
     [SerializeField]
     private int width = 10;
     [SerializeField]
-    private int lenght = 10;
+    private int length = 10;
     [HideInInspector]
     public Cell[,] cells;
 
@@ -39,21 +39,21 @@ public class RandomMazeGenerator : MonoBehaviour
         {
             width = 1;
         }
-        if (lenght <= 0)
+        if (length <= 0)
         {
-            lenght = 1;
+            length = 1;
         }
 
         CreateFloor();
-        GenerateRandomMazeMatrix(width, lenght);
+        GenerateRandomMazeMatrix(width, length);
         CreateMaze(cells);
     }
 
 
     private void CreateFloor()
     {
-        GameObject floor = Instantiate(floorPrefab, new Vector3(width / 2f, 0, lenght / 2f), Quaternion.identity);
-        floor.transform.localScale = new Vector3(width, floor.transform.localScale.y, lenght);
+        GameObject floor = Instantiate(floorPrefab, new Vector3(width / 2f, 0, length / 2f), Quaternion.identity);
+        floor.transform.localScale = new Vector3(width, floor.transform.localScale.y, length);
         floor.name = "Floor";
     }
 
@@ -118,7 +118,7 @@ public class RandomMazeGenerator : MonoBehaviour
                         cells[i + 1, j].hasWalls[0] = false;
                         VisitNewCell(cells, i + 1, j);
                     }
-                    else if (selectedWall == 3 && j + 1 < lenght && !cells[i, j + 1].isVisited)
+                    else if (selectedWall == 3 && j + 1 < length && !cells[i, j + 1].isVisited)
                     {
                         wallFound = true;
                         cells[i, j].hasWalls[3] = false;
@@ -140,7 +140,7 @@ public class RandomMazeGenerator : MonoBehaviour
             return true;
         else if (i + 1 < width && !cells[i + 1, j].isVisited)
             return true;
-        else if (j + 1 < lenght && !cells[i, j + 1].isVisited)
+        else if (j + 1 < length && !cells[i, j + 1].isVisited)
             return true;
         return false;
     }
@@ -149,7 +149,7 @@ public class RandomMazeGenerator : MonoBehaviour
     private void CleanCells(Cell[,] cells)
     {
         for (int i = 0; i < width; i++)
-            for (int j = 0; j < lenght; j++)
+            for (int j = 0; j < length; j++)
             {
                 if (cells[i, j].hasWalls[0] && i > 0)
                     cells[i - 1, j].hasWalls[2] = false;
@@ -164,7 +164,7 @@ public class RandomMazeGenerator : MonoBehaviour
         walls.name = "Walls";
         bool[] currentWalls;
         for (int i = 0; i < width; i++)
-            for (int j = 0; j < lenght; j++)
+            for (int j = 0; j < length; j++)
             {
                 currentWalls = cells[i, j].hasWalls;
                 for (int k = 0; k < 4; k++)
