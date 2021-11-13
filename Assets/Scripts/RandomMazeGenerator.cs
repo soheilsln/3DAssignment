@@ -77,7 +77,7 @@ public class RandomMazeGenerator : MonoBehaviour
         ILocation = Random.Range(0, width);
         JLocation = Random.Range(0, height);
         VisitNewCell(cells, ILocation, JLocation);
-        CleanCells(cells);
+        //CleanCells(cells);
     }
 
 
@@ -146,17 +146,17 @@ public class RandomMazeGenerator : MonoBehaviour
     }
 
     //Deletes duplicate walls
-    private void CleanCells(Cell[,] cells)
-    {
-        for (int i = 0; i < width; i++)
-            for (int j = 0; j < length; j++)
-            {
-                if (cells[i, j].hasWalls[0] && i > 0)
-                    cells[i - 1, j].hasWalls[2] = false;
-                if (cells[i, j].hasWalls[1] && j > 0)
-                    cells[i, j - 1].hasWalls[3] = false;
-            }
-    }
+    //private void CleanCells(Cell[,] cells)
+    //{
+    //    for (int i = 0; i < width; i++)
+    //        for (int j = 0; j < length; j++)
+    //        {
+    //            if (cells[i, j].hasWalls[0] && i > 0)
+    //                cells[i - 1, j].hasWalls[2] = false;
+    //            if (cells[i, j].hasWalls[1] && j > 0)
+    //                cells[i, j - 1].hasWalls[3] = false;
+    //        }
+    //}
 
     private void CreateMaze(Cell[,] cells)
     {
