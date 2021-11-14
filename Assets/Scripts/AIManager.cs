@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AIManager : MonoBehaviour
 {
     public RandomMazeGenerator.Cell[,] cells;
 
-    private int[] initialLocation;
+    private int[] currentLocation;
     private List<int[]> path;
     private List<int[]> visitedCells;
     private int[] exitLocation;
@@ -14,13 +15,16 @@ public class AIManager : MonoBehaviour
     void Start()
     {
         cells = RandomMazeGenerator.instance.cells;
-        initialLocation = GameManager.instance.SetInitialLocation();
+        currentLocation = GameManager.instance.initialLocation;
+        exitLocation = GameManager.instance.exitLocation;
         path = new List<int[]>();
         visitedCells = new List<int[]>();
-        path.Add(initialLocation);
-        visitedCells.Add(initialLocation);
-        ChoosePath(initialLocation);
-        //Debug.Log(initialLocation[0] + " " + initialLocation[1]);
+        path.Add(currentLocation);
+        visitedCells.Add(currentLocation);
+        while (!currentLocation.SequenceEqual(exitLocation))
+        {
+            ChoosePath(currentLocation);
+        }
     }
 
     void Update()
@@ -32,6 +36,7 @@ public class AIManager : MonoBehaviour
     {
         List<int> availablePaths = new List<int>();
         List<int[]> availableCells = new List<int[]>();
+        List<int[]> unvisitedAvailableCells = new List<int[]>();
 
         for (int i = 0; i < 4; i++)
         {
@@ -63,9 +68,36 @@ public class AIManager : MonoBehaviour
 
         foreach (int[] cell in availableCells)
         {
-
+            if (!visitedCells.Any(p => p.SequenceEqual(cell)))
+            {
+                unvisitedAvailableCells.Add(cell);
+            }
         }
 
+        if (unvisitedAvailableCells.Count == 0)
+        {
+            MoveBackward(path[path.Count - 2]);
+        }
+        else
+        {
+            int selectedCellIndex = Random.Range(0, unvisitedAvailableCells.Count);
+            MoveForward(unvisitedAvailableCells[selectedCellIndex]);
+        }
+    }
+
+    private void MoveForward(int[] cell)
+    {
+        //Debug.Log("moved to " + (cell[0] + 1) + "," + (cell[1] + 1));
+        visitedCells.Add(cell);
+        path.Add(cell);
+        currentLocation = cell;
+    }
+
+    private void MoveBackward(int[] cell)
+    {
+        //Debug.Log("moved to " + (cell[0] + 1) + "," + (cell[1] + 1));
+        path.Remove(path[path.Count - 1]);
+        currentLocation = cell;
     }
 
     public void chooseAction()

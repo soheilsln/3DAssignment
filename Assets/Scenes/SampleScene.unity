@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a58fda85de3474b44ac25f5473b1e671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialLocation: 
+  exitLocation: 
 --- !u!4 &512846653
 Transform:
   m_ObjectHideFlags: 0
@@ -465,7 +467,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4005226164030931353, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: width
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4005226164030931353, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: height
@@ -477,7 +479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4005226164030931353, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: length
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4005226164030931353, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: wallPrefab
