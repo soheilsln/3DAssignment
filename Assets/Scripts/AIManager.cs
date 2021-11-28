@@ -110,7 +110,7 @@ public class AIManager : MonoBehaviour
 
     private void MoveForward(int[] cell)
     {
-        Debug.Log("moved to " + (cell[0] + 1) + "," + (cell[1] + 1));
+        //Debug.Log("moved to " + (cell[0] + 1) + "," + (cell[1] + 1));
         visitedCells.Add(cell);
         path.Add(cell);
         currentLocation = cell;
@@ -118,7 +118,7 @@ public class AIManager : MonoBehaviour
 
     private void MoveBackward(int[] cell)
     {
-        Debug.Log("moved to " + (cell[0] + 1) + "," + (cell[1] + 1));
+        //Debug.Log("moved to " + (cell[0] + 1) + "," + (cell[1] + 1));
         path.Remove(path[path.Count - 1]);
         currentLocation = cell;
     }
