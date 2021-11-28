@@ -11,6 +11,8 @@ public class RandomMazeGenerator : MonoBehaviour
     private int width = 10;
     [SerializeField]
     private int length = 10;
+    [SerializeField]
+    private int scale = 4;
     [HideInInspector]
     public Cell[,] cells;
 
@@ -52,8 +54,9 @@ public class RandomMazeGenerator : MonoBehaviour
 
     private void CreateFloor()
     {
-        GameObject floor = Instantiate(floorPrefab, new Vector3(width / 2f, 0, length / 2f), Quaternion.identity);
-        floor.transform.localScale = new Vector3(width, floor.transform.localScale.y, length);
+        GameObject floor = Instantiate(floorPrefab, new Vector3((width / 2f) * scale, 0,
+            (length / 2f) * scale), Quaternion.identity);
+        floor.transform.localScale = new Vector3(width * scale, floor.transform.localScale.y, length * scale);
         floor.name = "Floor";
     }
 
@@ -174,24 +177,32 @@ public class RandomMazeGenerator : MonoBehaviour
                         if (k == 0)
                         {
                             GameObject wall = Instantiate(wallPrefab, walls.transform);
-                            wall.transform.position = new Vector3(i, wall.transform.position.y, j + 0.5f);
+                            wall.name = "Wall";
+                            wall.transform.position = new Vector3(i * scale, wall.transform.position.y + scale / 2f, (j + 0.5f) * scale);
                             wall.transform.rotation = Quaternion.Euler(wall.transform.rotation.x, 90, wall.transform.rotation.z);
+                            wall.transform.localScale *= scale;
                         }
                         else if (k == 1)
                         {
                             GameObject wall = Instantiate(wallPrefab, walls.transform);
-                            wall.transform.position = new Vector3(0.5f + i, wall.transform.position.y, j);
+                            wall.name = "Wall";
+                            wall.transform.position = new Vector3((i + 0.5f) * scale, wall.transform.position.y + scale / 2f, j * scale);
+                            wall.transform.localScale *= scale;
                         }
                         else if (k == 2)
                         {
                             GameObject wall = Instantiate(wallPrefab, walls.transform);
-                            wall.transform.position = new Vector3(i + 1, wall.transform.position.y, j + 0.5f);
+                            wall.name = "Wall";
+                            wall.transform.position = new Vector3((i + 1) * scale, wall.transform.position.y + scale / 2f, (j + 0.5f) * scale);
                             wall.transform.rotation = Quaternion.Euler(wall.transform.rotation.x, 90, wall.transform.rotation.z);
+                            wall.transform.localScale *= scale;
                         }
                         else
                         {
                             GameObject wall = Instantiate(wallPrefab, walls.transform);
-                            wall.transform.position = new Vector3(0.5f + i, wall.transform.position.y, j + 1);
+                            wall.name = "Wall";
+                            wall.transform.position = new Vector3((i + 0.5f) * scale, wall.transform.position.y + scale/2f, (j + 1) * scale);
+                            wall.transform.localScale *= scale;
                         }
                     }
                 }
