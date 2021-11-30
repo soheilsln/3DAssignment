@@ -224,4 +224,9 @@ public class RandomMazeGenerator : MonoBehaviour
         }
     }
 
+    public int GetScale()
+    {
+        return scale;
+    }
+
 }
