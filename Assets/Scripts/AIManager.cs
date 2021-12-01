@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class AIManager : MonoBehaviour
 {
-    public float moveDuration = 3f;
 
     public RandomMazeGenerator.Cell[,] cells;
     private RandomMazeGenerator randomMazeGenerator;
@@ -21,15 +20,19 @@ public class AIManager : MonoBehaviour
     private int[] keyLocation1;
     private int[] keyLocation2;
 
-    //private Animator animator;
-    //// animation IDs
-    //private int _animIDSpeed;
-    //private int _animIDGrounded;
-    //private int _animIDMotionSpeed;
+    private const float runMoveDuration = 1.5f;
+    private const float walkMoveDuration = 1.5f;
+    private const float runSpeedAnimation = 5.335f;
+    private const float walkSpeedAnimation = 2f;
+
+    private Animator animator;
+    
 
     private void Awake()
     {
         randomMazeGenerator = RandomMazeGenerator.instance;
+        animator = GetComponent<Animator>();
+        animator.SetFloat("MotionSpeed", 1f);
     }
 
     void Start()
@@ -46,10 +49,6 @@ public class AIManager : MonoBehaviour
         path.Add(currentLocation);
         visitedCells.Add(currentLocation);
 
-        //_animIDSpeed = Animator.StringToHash("Speed");
-        //_animIDGrounded = Animator.StringToHash("Grounded");
-        //_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-        //animator.SetBool(_animIDGrounded, true);
     }
 
     void Update()
@@ -118,21 +117,21 @@ public class AIManager : MonoBehaviour
     {
         reachedDestination = false;
         currentLocation = exitPath.Pop();
-        StartCoroutine(MoveToLocation(ConvertCellToLocation(currentLocation), moveDuration));
+        StartCoroutine(MoveToLocation(ConvertCellToLocation(currentLocation), runMoveDuration));
     }
 
     private void MoveForward(int[] cell)
     {
         visitedCells.Add(cell);
         path.Add(cell);
-        StartCoroutine(MoveToLocation(ConvertCellToLocation(cell), moveDuration));
+        StartCoroutine(MoveToLocation(ConvertCellToLocation(cell), runMoveDuration));
         currentLocation = cell;
     }
 
     private void MoveBackward(int[] cell)
     {
         path.Remove(path[path.Count - 1]);
-        StartCoroutine(MoveToLocation(ConvertCellToLocation(cell), moveDuration));
+        StartCoroutine(MoveToLocation(ConvertCellToLocation(cell), runMoveDuration));
         currentLocation = cell;
     }
 
@@ -147,6 +146,9 @@ public class AIManager : MonoBehaviour
         float time = 0f;
         Vector3 startPosition = transform.position;
 
+        transform.LookAt(location);
+        animator.SetFloat("Speed", 5.335f);
+
         while (time < duration)
         {
             transform.position = Vector3.Lerp(startPosition, location, time / duration);
@@ -155,6 +157,7 @@ public class AIManager : MonoBehaviour
         }
         transform.position = location;
         reachedDestination = true;
+        animator.SetFloat("Speed", 0f);
     }
 
     private void Move()

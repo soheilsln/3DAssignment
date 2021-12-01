@@ -37,13 +37,13 @@ public class RandomMazeGenerator : MonoBehaviour
 
     void Start()
     {
-        if (width <= 0)
+        if (width < 2)
         {
-            width = 1;
+            width = 2;
         }
-        if (length <= 0)
+        if (length < 2)
         {
-            length = 1;
+            length = 2;
         }
 
         CreateFloor();
