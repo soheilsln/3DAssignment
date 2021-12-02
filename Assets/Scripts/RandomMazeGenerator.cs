@@ -18,6 +18,7 @@ public class RandomMazeGenerator : MonoBehaviour
 
     public GameObject floorPrefab;
     public GameObject wallPrefab;
+    public GameObject roofColliderPrefab;
 
     void Awake()
     {
@@ -54,10 +55,14 @@ public class RandomMazeGenerator : MonoBehaviour
 
     private void CreateFloor()
     {
-        GameObject floor = Instantiate(floorPrefab, new Vector3((width / 2f) * scale, 0,
-            (length / 2f) * scale), Quaternion.identity);
+        GameObject floor = Instantiate(floorPrefab, new Vector3((width / 2f) * scale, 
+            -floorPrefab.transform.localScale.y/2f, (length / 2f) * scale), Quaternion.identity);
+        GameObject roofCollider = Instantiate(roofColliderPrefab, new Vector3((width / 2f) * scale, 
+            scale + floorPrefab.transform.localScale.y / 2f, (length / 2f) * scale), Quaternion.identity);
         floor.transform.localScale = new Vector3(width * scale, floor.transform.localScale.y, length * scale);
+        roofCollider.transform.localScale = new Vector3(width * scale, floor.transform.localScale.y, length * scale);
         floor.name = "Floor";
+        roofCollider.name = "RoofCollider";
     }
 
     private void GenerateRandomMazeMatrix(int width, int height)
