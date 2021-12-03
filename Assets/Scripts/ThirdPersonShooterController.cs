@@ -26,6 +26,9 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField]
     private float punchCooldownTime = 10f;
     private float punchTimeStamp = 0f;
+    private bool isWalking = false;
+    [SerializeField]
+    private float walkTime = 10f;
 
     private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInputs;
@@ -86,11 +89,28 @@ public class ThirdPersonShooterController : MonoBehaviour
             punchTimeStamp = Time.time + punchCooldownTime;
         }
 
+        if(isWalking)
+        {
+            starterAssetsInputs.sprint = false;
+        }
+
     }
 
     public void OnPunchAnimEnds()
     {
         animator.SetBool("Punch", false);
         starterAssetsInputs.punch = false;
+    }
+
+    public void SetIsWalking()
+    {
+        StartCoroutine(StartWalkProcess());
+    }
+
+    private IEnumerator StartWalkProcess()
+    {
+        isWalking = true;
+        yield return new WaitForSeconds(walkTime);
+        isWalking = false;
     }
 }

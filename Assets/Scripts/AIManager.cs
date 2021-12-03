@@ -20,6 +20,7 @@ public class AIManager : MonoBehaviour
     private int[] exitLocation;
     private int[] keyLocation1;
     private int[] keyLocation2;
+    private bool isWalking = false;
 
     private const float runMoveDuration = 1.5f;
     private const float walkMoveDuration = 1.5f;
@@ -215,6 +216,11 @@ public class AIManager : MonoBehaviour
     public void ChooseAction()
     {
         Move();
+    }
+
+    public void SetIsWalking(bool isWalking)
+    {
+        this.isWalking = isWalking;
     }
 
 }

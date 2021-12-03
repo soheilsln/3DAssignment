@@ -16,4 +16,20 @@ public class Fire : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            if (other.GetComponent<ThirdPersonShooterController>() != null)
+            {
+                other.GetComponent<ThirdPersonShooterController>().SetIsWalking();
+            }
+            else if (other.GetComponent<AIManager>() != null)
+            {
+                other.GetComponent<AIManager>().SetIsWalking(true);
+
+            }
+        }
+    }
+
 }
