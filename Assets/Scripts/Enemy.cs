@@ -7,7 +7,7 @@ public abstract class Enemy : MonoBehaviour
     public RandomMazeGenerator.Cell[,] cells;
     private RandomMazeGenerator randomMazeGenerator;
     public float moveDuration = 10f;
-    private bool reachedDestination = true;
+    protected bool reachedDestination = true;
     private int[] currentLocation;
 
 
@@ -30,7 +30,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveToLocation(Vector3 location, float duration)
+    protected virtual IEnumerator MoveToLocation(Vector3 location, float duration)
     {
         float time = 0f;
         Vector3 startPosition = transform.position;
