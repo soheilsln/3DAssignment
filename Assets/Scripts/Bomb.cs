@@ -21,7 +21,7 @@ public class Bomb : MonoBehaviour
 
     private void Update()
     {
-        if(onFloor)
+        if (onFloor)
         {
             Explode();
         }
@@ -43,7 +43,8 @@ public class Bomb : MonoBehaviour
         if (!gameManager.ConvertLocationToCell(player.position).SequenceEqual(currentCell) &&
             !gameManager.ConvertLocationToCell(AI.position).SequenceEqual(currentCell))
         {
-            GameObject fire = Instantiate(fireVFX, transform.position, Quaternion.identity);
+            GameObject fire = Instantiate(fireVFX, gameManager.ConvertCellToLocation(currentCell, transform.position.y), 
+                Quaternion.identity);
             int scale = RandomMazeGenerator.instance.GetScale();
             fire.transform.localScale = new Vector3(scale, fire.transform.localScale.y, scale);
             fire.GetComponent<ParticleSystem>().Play(true);

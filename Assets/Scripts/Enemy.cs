@@ -5,12 +5,12 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     public RandomMazeGenerator.Cell[,] cells;
-    private RandomMazeGenerator randomMazeGenerator;
-    private GameManager gameManager;
+    protected RandomMazeGenerator randomMazeGenerator;
+    protected GameManager gameManager;
 
     public float moveDuration = 10f;
     protected bool reachedDestination = true;
-    private int[] currentLocation;
+    protected int[] currentLocation;
 
 
     protected virtual void Awake()
