@@ -18,6 +18,14 @@ public class ThirdPersonShooterController : MonoBehaviour
     private GameObject bullet;
     [SerializeField]
     private Transform spawnBulletPosition;
+    [SerializeField]
+    private GameObject aimImage;
+    [SerializeField]
+    private float shootCooldownTime = 10f;
+    private float shootTimeStamp = 0f;
+    [SerializeField]
+    private float punchCooldownTime = 10f;
+    private float punchTimeStamp = 0f;
 
     private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInputs;
@@ -35,14 +43,15 @@ public class ThirdPersonShooterController : MonoBehaviour
         Vector3 aimWorldPosition = Vector3.zero;
         Vector2 screenCentrePoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(screenCentrePoint);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, 999f, aimColliderLayerMask))
         {
-            aimWorldPosition = raycastHit.point;
+            aimWorldPosition = hit.point;
         }
 
         if (starterAssetsInputs.aim)
         {
             animator.SetBool("Aim", true);
+            aimImage.SetActive(true);
             aimVirtualCamera.gameObject.SetActive(true);
             thirdPersonController.SetSensitivity(aimSensitivity);
             thirdPersonController.SetRotateOnMove(false);
@@ -57,27 +66,31 @@ public class ThirdPersonShooterController : MonoBehaviour
         else
         {
             animator.SetBool("Aim", false);
+            aimImage.SetActive(false);
             aimVirtualCamera.gameObject.SetActive(false);
             thirdPersonController.SetSensitivity(normalSensitivity);
             thirdPersonController.SetRotateOnMove(true);
         }
 
-        if (starterAssetsInputs.shoot)
+        if (starterAssetsInputs.shoot && shootTimeStamp <= Time.time)
         {
             Vector3 aimDir = (aimWorldPosition - spawnBulletPosition.position).normalized;
             Instantiate(bullet, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
             starterAssetsInputs.shoot = false;
+            shootTimeStamp = Time.time + shootCooldownTime;
         }
 
-        if(starterAssetsInputs.punch)
+        if (starterAssetsInputs.punch && punchTimeStamp <= Time.time)
         {
             animator.SetBool("Punch", true);
-            starterAssetsInputs.punch = false;
-        }
-        else
-        {
-            animator.SetBool("Punch", false);
+            punchTimeStamp = Time.time + punchCooldownTime;
         }
 
+    }
+
+    public void OnPunchAnimEnds()
+    {
+        animator.SetBool("Punch", false);
+        starterAssetsInputs.punch = false;
     }
 }

@@ -353,7 +353,8 @@ GameObject:
   - component: {fileID: 418097409820396158}
   - component: {fileID: 5993532121244160004}
   - component: {fileID: 1046719459909914823}
-  m_Layer: 8
+  - component: {fileID: 7922320940409359529}
+  m_Layer: 0
   m_Name: AI
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -408,6 +409,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af376ebec91a66a409499630e7b7eade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &7922320940409359529
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046719459909914820}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.28
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.93, z: 0}
 --- !u!1 &1119850055541869079
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,7 +681,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9002395757659662652}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

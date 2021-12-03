@@ -37,7 +37,7 @@ public class AIManager : MonoBehaviour
 
     void Start()
     {
-        cells = RandomMazeGenerator.instance.cells;
+        cells = randomMazeGenerator.cells;
         currentLocation = GameManager.instance.initialLocation;
         exitLocation = GameManager.instance.exitLocation;
         keyLocation1 = GameManager.instance.keyLocation1;
@@ -138,7 +138,7 @@ public class AIManager : MonoBehaviour
     private Vector3 ConvertCellToLocation(int[] cell)
     {
         int scale = randomMazeGenerator.GetScale();
-        return new Vector3((cell[0] + 0.5f) * scale, 0f, (cell[1] + 0.5f) * scale);
+        return new Vector3((cell[0] + 0.5f) * scale, transform.position.y, (cell[1] + 0.5f) * scale);
     }
 
     private IEnumerator MoveToLocation(Vector3 location, float duration)

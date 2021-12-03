@@ -718,7 +718,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7174040152517193065}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1036,7 +1036,7 @@ GameObject:
   - component: {fileID: 135756642000475821}
   - component: {fileID: 4416926081852918493}
   - component: {fileID: 1715289488}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: PlayerArmature
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1161,6 +1161,7 @@ MonoBehaviour:
   sprint: 0
   aim: 0
   shoot: 0
+  punch: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -1282,6 +1283,9 @@ MonoBehaviour:
     m_Bits: 1
   bullet: {fileID: 8480627459787570420, guid: d61b253c138a0fb4097e3246363f0723, type: 3}
   spawnBulletPosition: {fileID: 7174040152517193065}
+  aimImage: {fileID: 0}
+  shootCooldownTime: 10
+  punchCooldownTime: 10
 --- !u!1 &4523139366846529165
 GameObject:
   m_ObjectHideFlags: 0

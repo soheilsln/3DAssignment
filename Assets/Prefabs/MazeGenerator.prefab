@@ -44,4 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   width: 10
-  height: 10
+  length: 10
+  scale: 8
+  floorPrefab: {fileID: 2851414229993026260, guid: f9b6bcee8d1d6ce48b8e26c8f191b569, type: 3}
+  wallPrefab: {fileID: 3134236304282904091, guid: 2c7a570a731b5a345b39428127fa96d1, type: 3}
+  roofColliderPrefab: {fileID: 2851414229993026260, guid: c28ecc6b8a7d34c41aacb0f43fe2a4e8, type: 3}
