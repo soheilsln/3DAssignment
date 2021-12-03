@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &38552136 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 418097409820396158, guid: fed355e2890d96c4da22b0bad63434df, type: 3}
+  m_PrefabInstance: {fileID: 3731974543829303805}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &175764970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -360,6 +365,8 @@ MonoBehaviour:
   exitLocation: 
   keyLocation1: 
   keyLocation2: 
+  player: {fileID: 0}
+  AI: {fileID: 0}
 --- !u!4 &512846653
 Transform:
   m_ObjectHideFlags: 0
@@ -374,24 +381,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &553320809 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 386488806973550416, guid: b75d36797382312428c17c500efc23ad, type: 3}
-  m_PrefabInstance: {fileID: 1033626274}
+--- !u!4 &675733338 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+  m_PrefabInstance: {fileID: 2139822329}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &553320810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 553320809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fafa847846d7f64cb654f1b9d7ca3d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveDuration: 10
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,6 +547,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 553320810, guid: b75d36797382312428c17c500efc23ad, type: 3}
+      propertyPath: AI
+      value: 
+      objectReference: {fileID: 38552136}
+    - target: {fileID: 553320810, guid: b75d36797382312428c17c500efc23ad, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 675733338}
+    - target: {fileID: 553320810, guid: b75d36797382312428c17c500efc23ad, type: 3}
+      propertyPath: bombCooldownTime
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 386488806973550416, guid: b75d36797382312428c17c500efc23ad, type: 3}
       propertyPath: m_Name
       value: Bomber
@@ -601,24 +607,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2188162234729696901, guid: b75d36797382312428c17c500efc23ad, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: ca862d9708fb270498ff25634a51396d, type: 2}
-    - target: {fileID: 2188162234729696901, guid: b75d36797382312428c17c500efc23ad, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4e009e94172ef3943b3a68831c591e45, type: 2}
-    - target: {fileID: 8843893090919602596, guid: b75d36797382312428c17c500efc23ad, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: ca862d9708fb270498ff25634a51396d, type: 2}
-    - target: {fileID: 8843893090919602596, guid: b75d36797382312428c17c500efc23ad, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4e009e94172ef3943b3a68831c591e45, type: 2}
-    m_RemovedComponents:
-    - {fileID: 4399472920938505514, guid: b75d36797382312428c17c500efc23ad, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b75d36797382312428c17c500efc23ad, type: 3}
 --- !u!1 &1069805995
 GameObject:

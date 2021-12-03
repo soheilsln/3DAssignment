@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public int[] keyLocation2;
 
+    public GameObject player;
+    public GameObject AI;
+
     void Awake()
     {
         if (instance == null)
@@ -29,6 +32,9 @@ public class GameManager : MonoBehaviour
         {
             DontDestroyOnLoad(this.gameObject);
         }
+
+        player = FindObjectOfType<ThirdPersonShooterController>().gameObject;
+        AI = FindObjectOfType<AIManager>().gameObject;
     }
 
     private int[] SetInitialLocation()

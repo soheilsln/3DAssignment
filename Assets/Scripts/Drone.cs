@@ -7,8 +7,8 @@ public class Drone : Enemy
     
 
     public GameObject bullet;
-    public Transform player;
-    public Transform AI;
+    private Transform player;
+    private Transform AI;
     public Transform spawnBulletPosition;
     [SerializeField]
     private float attackRange = 10f;
@@ -21,6 +21,8 @@ public class Drone : Enemy
     protected override void Awake()
     {
         base.Awake();
+        player = GameManager.instance.player.transform;
+        AI = GameManager.instance.AI.transform;
     }
 
     protected override void Start()

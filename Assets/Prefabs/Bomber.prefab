@@ -26,6 +26,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDuration: 10
+  bombPrefab: {fileID: 625112572523098938, guid: 96e279f56b09e7b41ba90973eafcd8f7, type: 3}
+  bombSpawnPoint: {fileID: 5585168870910579506}
 --- !u!1 &7233922625415580392
 GameObject:
   m_ObjectHideFlags: 0
@@ -36,7 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5585168870910579506}
   m_Layer: 0
-  m_Name: BulletSpawnPoint
+  m_Name: BombSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
