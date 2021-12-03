@@ -6,6 +6,8 @@ public abstract class Enemy : MonoBehaviour
 {
     public RandomMazeGenerator.Cell[,] cells;
     private RandomMazeGenerator randomMazeGenerator;
+    private GameManager gameManager;
+
     public float moveDuration = 10f;
     protected bool reachedDestination = true;
     private int[] currentLocation;
@@ -14,6 +16,7 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void Awake()
     {
         randomMazeGenerator = RandomMazeGenerator.instance;
+        gameManager = GameManager.instance;
     }
 
     protected virtual void Start()
@@ -49,14 +52,9 @@ public abstract class Enemy : MonoBehaviour
 
     private void Move(int[] cell)
     {
-        StartCoroutine(MoveToLocation(ConvertCellToLocation(cell), moveDuration));
+        StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(cell, transform.position.y)
+            , moveDuration));
         currentLocation = cell;
-    }
-
-    private Vector3 ConvertCellToLocation(int[] cell)
-    {
-        int scale = randomMazeGenerator.GetScale();
-        return new Vector3((cell[0] + 0.5f) * scale, transform.position.y, (cell[1] + 0.5f) * scale);
     }
 
     public void ChoosePath(int[] location)

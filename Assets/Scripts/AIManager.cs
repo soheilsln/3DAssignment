@@ -8,6 +8,7 @@ public class AIManager : MonoBehaviour
 
     public RandomMazeGenerator.Cell[,] cells;
     private RandomMazeGenerator randomMazeGenerator;
+    private GameManager gameManager;
 
     private int[] currentLocation;
     private List<int[]> path;
@@ -31,6 +32,7 @@ public class AIManager : MonoBehaviour
     private void Awake()
     {
         randomMazeGenerator = RandomMazeGenerator.instance;
+        gameManager = GameManager.instance;
         animator = GetComponent<Animator>();
         animator.SetFloat("MotionSpeed", 1f);
     }
@@ -117,28 +119,25 @@ public class AIManager : MonoBehaviour
     {
         reachedDestination = false;
         currentLocation = exitPath.Pop();
-        StartCoroutine(MoveToLocation(ConvertCellToLocation(currentLocation), runMoveDuration));
+        StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(currentLocation,transform.position.y), 
+            runMoveDuration));
     }
 
     private void MoveForward(int[] cell)
     {
         visitedCells.Add(cell);
         path.Add(cell);
-        StartCoroutine(MoveToLocation(ConvertCellToLocation(cell), runMoveDuration));
+        StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(cell, transform.position.y), 
+            runMoveDuration));
         currentLocation = cell;
     }
 
     private void MoveBackward(int[] cell)
     {
         path.Remove(path[path.Count - 1]);
-        StartCoroutine(MoveToLocation(ConvertCellToLocation(cell), runMoveDuration));
+        StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(cell, transform.position.y), 
+            runMoveDuration));
         currentLocation = cell;
-    }
-
-    private Vector3 ConvertCellToLocation(int[] cell)
-    {
-        int scale = randomMazeGenerator.GetScale();
-        return new Vector3((cell[0] + 0.5f) * scale, transform.position.y, (cell[1] + 0.5f) * scale);
     }
 
     private IEnumerator MoveToLocation(Vector3 location, float duration)

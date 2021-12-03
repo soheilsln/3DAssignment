@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28b44d6df4f90a64aaef3bdcc39156de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireVFX: {fileID: 896085711416615333, guid: a34d80dbdfe2e8d41bf88177679d90c5, type: 3}
 --- !u!1 &625112572523098940
 GameObject:
   m_ObjectHideFlags: 0

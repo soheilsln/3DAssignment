@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public RandomMazeGenerator.Cell[,] cells;
+    private RandomMazeGenerator randomMazeGenerator;
+
     [HideInInspector]
     public int[] initialLocation;
     [HideInInspector]
@@ -14,9 +16,12 @@ public class GameManager : MonoBehaviour
     public int[] keyLocation1;
     [HideInInspector]
     public int[] keyLocation2;
-
+    [HideInInspector]
     public GameObject player;
+    [HideInInspector]
     public GameObject AI;
+
+    public float fireDuration;
 
     void Awake()
     {
@@ -35,6 +40,7 @@ public class GameManager : MonoBehaviour
 
         player = FindObjectOfType<ThirdPersonShooterController>().gameObject;
         AI = FindObjectOfType<AIManager>().gameObject;
+        randomMazeGenerator = RandomMazeGenerator.instance;
     }
 
     private int[] SetInitialLocation()
@@ -76,6 +82,26 @@ public class GameManager : MonoBehaviour
         {
             return new int[] { cells.GetLength(0) - 1, 0 };
         }
+    }
+
+    public Vector3 ConvertCellToLocation(int[] cell, float y)
+    {
+        int scale = randomMazeGenerator.GetScale();
+        return new Vector3((cell[0] + 0.5f) * scale, y, (cell[1] + 0.5f) * scale);
+    }
+
+    public int[] ConvertLocationToCell(Vector3 location)
+    {
+        int scale = randomMazeGenerator.GetScale();
+        int[] cell = new int[2];
+        cell[0] = Mathf.FloorToInt((location.x / (float)scale));
+        cell[1] = Mathf.FloorToInt((location.z / (float)scale));
+        return cell;
+    }
+
+    public float GetFireDuration()
+    {
+        return fireDuration;
     }
 
     void Start()

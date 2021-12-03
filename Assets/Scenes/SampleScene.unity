@@ -367,6 +367,7 @@ MonoBehaviour:
   keyLocation2: 
   player: {fileID: 0}
   AI: {fileID: 0}
+  fireDuration: 0
 --- !u!4 &512846653
 Transform:
   m_ObjectHideFlags: 0
