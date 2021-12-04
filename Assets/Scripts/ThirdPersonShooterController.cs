@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using StarterAssets;
+using System.Linq;
 
 public class ThirdPersonShooterController : MonoBehaviour
 {
+    public GameObject bombPrefab;
+
     [SerializeField]
     private CinemachineVirtualCamera aimVirtualCamera;
     [SerializeField]
@@ -29,16 +32,25 @@ public class ThirdPersonShooterController : MonoBehaviour
     private bool isWalking = false;
     [SerializeField]
     private float walkTime = 10f;
+    [SerializeField]
+    private float bombCooldownTime = 10f;
+    private float bombTimeStamp = 0f;
 
     private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInputs;
     private Animator animator;
+    private AIManager AI;
 
     private void Awake()
     {
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         thirdPersonController = GetComponent<ThirdPersonController>();
         animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        AI = GameManager.instance.AI.GetComponent<AIManager>();
     }
 
     private void Update()
@@ -75,21 +87,39 @@ public class ThirdPersonShooterController : MonoBehaviour
             thirdPersonController.SetRotateOnMove(true);
         }
 
-        if (starterAssetsInputs.shoot && shootTimeStamp <= Time.time)
+        if (starterAssetsInputs.shoot)
         {
-            Vector3 aimDir = (aimWorldPosition - spawnBulletPosition.position).normalized;
-            Instantiate(bullet, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
             starterAssetsInputs.shoot = false;
-            shootTimeStamp = Time.time + shootCooldownTime;
+            if (shootTimeStamp <= Time.time)
+            {
+                Vector3 aimDir = (aimWorldPosition - spawnBulletPosition.position).normalized;
+                Instantiate(bullet, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+                shootTimeStamp = Time.time + shootCooldownTime;
+            }
         }
 
-        if (starterAssetsInputs.punch && punchTimeStamp <= Time.time)
+        if (starterAssetsInputs.punch)
         {
-            animator.SetBool("Punch", true);
-            punchTimeStamp = Time.time + punchCooldownTime;
+            starterAssetsInputs.punch = false;
+            if (punchTimeStamp <= Time.time)
+            {
+                animator.SetBool("Punch", true);
+                punchTimeStamp = Time.time + punchCooldownTime;
+                PunchAttack();
+            }
         }
 
-        if(isWalking)
+        if (starterAssetsInputs.bomb)
+        {
+            starterAssetsInputs.bomb = false;
+            if (bombTimeStamp <= Time.time)
+            {
+                DropBomb();
+                bombTimeStamp = Time.time + bombCooldownTime;
+            }
+        }
+
+        if (isWalking)
         {
             starterAssetsInputs.sprint = false;
         }
@@ -99,7 +129,6 @@ public class ThirdPersonShooterController : MonoBehaviour
     public void OnPunchAnimEnds()
     {
         animator.SetBool("Punch", false);
-        starterAssetsInputs.punch = false;
     }
 
     public void SetIsWalking()
@@ -109,8 +138,26 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     private IEnumerator StartWalkProcess()
     {
-        isWalking = true;
-        yield return new WaitForSeconds(walkTime);
-        isWalking = false;
+        if (!isWalking)
+        {
+            isWalking = true;
+            yield return new WaitForSeconds(walkTime);
+            isWalking = false;
+        }
     }
+
+    private void PunchAttack()
+    {
+        if (GameManager.instance.ConvertLocationToCell(transform.position).SequenceEqual(
+            GameManager.instance.ConvertLocationToCell(AI.transform.position)))
+        {
+            AI.SetIsWalking();
+        }
+    }
+
+    private void DropBomb()
+    {
+        Instantiate(bombPrefab, transform.position + transform.forward, Quaternion.identity);
+    }
+
 }

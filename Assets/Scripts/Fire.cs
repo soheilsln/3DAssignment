@@ -26,8 +26,7 @@ public class Fire : MonoBehaviour
             }
             else if (other.GetComponent<AIManager>() != null)
             {
-                other.GetComponent<AIManager>().SetIsWalking(true);
-
+                other.GetComponent<AIManager>().SetIsWalking();
             }
         }
     }

@@ -21,9 +21,21 @@ public class Bullet : MonoBehaviour
     {
         Destroy(gameObject);
 
-        if(other.GetComponent<Enemy>() != null)
+        if(other.gameObject.CompareTag("Enemy"))
         {
             other.GetComponent<Enemy>().Die();
+        }
+        if(other.gameObject.CompareTag("Player"))
+        {
+            if(other.GetComponent<ThirdPersonShooterController>() != null)
+            {
+                other.GetComponent<ThirdPersonShooterController>().SetIsWalking();
+            }
+
+            if(other.GetComponent<AIManager>() != null)
+            {
+                other.GetComponent<AIManager>().SetIsWalking();
+            }
         }
     }
 }

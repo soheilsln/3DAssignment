@@ -23,9 +23,11 @@ public class AIManager : MonoBehaviour
     private bool isWalking = false;
 
     private const float runMoveDuration = 1.5f;
-    private const float walkMoveDuration = 1.5f;
+    private const float walkMoveDuration = 3.75f;
     private const float runSpeedAnimation = 5.335f;
     private const float walkSpeedAnimation = 2f;
+    [SerializeField]
+    private float walkTime = 10f;
 
     private Animator animator;
     
@@ -120,24 +122,27 @@ public class AIManager : MonoBehaviour
     {
         reachedDestination = false;
         currentLocation = exitPath.Pop();
-        StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(currentLocation,transform.position.y), 
-            runMoveDuration));
+        float moveDuration = isWalking ? walkMoveDuration : runMoveDuration;
+        StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(currentLocation,transform.position.y),
+            moveDuration));
     }
 
     private void MoveForward(int[] cell)
     {
         visitedCells.Add(cell);
         path.Add(cell);
+        float moveDuration = isWalking ? walkMoveDuration : runMoveDuration;
         StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(cell, transform.position.y), 
-            runMoveDuration));
+            moveDuration));
         currentLocation = cell;
     }
 
     private void MoveBackward(int[] cell)
     {
         path.Remove(path[path.Count - 1]);
+        float moveDuration = isWalking ? walkMoveDuration : runMoveDuration;
         StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(cell, transform.position.y), 
-            runMoveDuration));
+            moveDuration));
         currentLocation = cell;
     }
 
@@ -147,7 +152,8 @@ public class AIManager : MonoBehaviour
         Vector3 startPosition = transform.position;
 
         transform.LookAt(location);
-        animator.SetFloat("Speed", 5.335f);
+        float speedAnimation = isWalking ? walkSpeedAnimation : runSpeedAnimation;
+        animator.SetFloat("Speed", speedAnimation);
 
         while (time < duration)
         {
@@ -218,9 +224,19 @@ public class AIManager : MonoBehaviour
         Move();
     }
 
-    public void SetIsWalking(bool isWalking)
+    public void SetIsWalking()
     {
-        this.isWalking = isWalking;
+        StartCoroutine(StartWalkProcess());
+    }
+
+    private IEnumerator StartWalkProcess()
+    {
+        if (!isWalking)
+        {
+            isWalking = true;
+            yield return new WaitForSeconds(walkTime);
+            isWalking = false;
+        }
     }
 
 }

@@ -77,6 +77,7 @@ namespace StarterAssets
         private GameObject _mainCamera;
         private bool _rotateOnMove = true;
         private StarterAssetsInputs starterAssetsInputs;
+        private ThirdPersonShooterController player;
 
 
         private const float _threshold = 0.01f;
@@ -91,7 +92,6 @@ namespace StarterAssets
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
             starterAssetsInputs = GetComponent<StarterAssetsInputs>();
-
         }
 
         private void Start()
@@ -101,7 +101,7 @@ namespace StarterAssets
             _input = GetComponent<StarterAssetsInputs>();
 
             AssignAnimationIDs();
-
+            player = GameManager.instance.player.GetComponent<ThirdPersonShooterController>();
 
         }
 
@@ -166,8 +166,9 @@ namespace StarterAssets
             // if there is no input, set the target speed to 0
             if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
-            if (starterAssetsInputs.aim || starterAssetsInputs.punch)
+            if (starterAssetsInputs.aim)
                 targetSpeed = 0.0f;
+            
 
             // a reference to the players current horizontal velocity
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;

@@ -14,6 +14,7 @@ namespace StarterAssets
         public bool aim;
         public bool shoot;
         public bool punch;
+        public bool bomb;
 
         [Header("Movement Settings")]
         public bool analogMovement;
@@ -57,6 +58,11 @@ namespace StarterAssets
         {
             PunchInput(value.isPressed);
         }
+
+        public void OnBomb(InputValue value)
+        {
+            BombInput(value.isPressed);
+        }
 #else
 	// old input sys if we do decide to have it (most likely wont)...
 #endif
@@ -92,6 +98,12 @@ namespace StarterAssets
         {
             if (!aim)
                 punch = newPunchState;
+        }
+
+        public void BombInput(bool newBombState)
+        {
+            if (!aim)
+                bomb = newBombState;
         }
 
 #if !UNITY_IOS || !UNITY_ANDROID
