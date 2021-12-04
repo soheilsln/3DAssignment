@@ -597,6 +597,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1203261827 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1046719459909914820, guid: fed355e2890d96c4da22b0bad63434df, type: 3}
+  m_PrefabInstance: {fileID: 3731974543829303805}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1203261832
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203261827}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!1 &1415672303
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,6 +762,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1415672303}
     - target: {fileID: 1715289488, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: bombPrefab
+      value: 
+      objectReference: {fileID: 625112572523098938, guid: 96e279f56b09e7b41ba90973eafcd8f7, type: 3}
+    - target: {fileID: 1715289488, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: aimVirtualCamera
       value: 
       objectReference: {fileID: 175764971}
@@ -861,10 +886,6 @@ PrefabInstance:
     - target: {fileID: 1046719459909914820, guid: fed355e2890d96c4da22b0bad63434df, type: 3}
       propertyPath: m_Name
       value: AI
-      objectReference: {fileID: 0}
-    - target: {fileID: 1046719459909914823, guid: fed355e2890d96c4da22b0bad63434df, type: 3}
-      propertyPath: isWalking
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fed355e2890d96c4da22b0bad63434df, type: 3}

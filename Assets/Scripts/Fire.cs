@@ -24,9 +24,9 @@ public class Fire : MonoBehaviour
             {
                 other.GetComponent<ThirdPersonShooterController>().SetIsWalking();
             }
-            else if (other.GetComponent<AIManager>() != null)
+            else if (other.GetComponent<AIController>() != null)
             {
-                other.GetComponent<AIManager>().SetIsWalking();
+                other.GetComponent<AIController>().SetIsWalking();
             }
         }
     }

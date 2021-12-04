@@ -39,7 +39,7 @@ public class ThirdPersonShooterController : MonoBehaviour
     private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInputs;
     private Animator animator;
-    private AIManager AI;
+    private AIController AI;
 
     private void Awake()
     {
@@ -50,7 +50,7 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     private void Start()
     {
-        AI = GameManager.instance.AI.GetComponent<AIManager>();
+        AI = GameManager.instance.AI.GetComponent<AIController>();
     }
 
     private void Update()

@@ -32,9 +32,9 @@ public class Bullet : MonoBehaviour
                 other.GetComponent<ThirdPersonShooterController>().SetIsWalking();
             }
 
-            if(other.GetComponent<AIManager>() != null)
+            if(other.GetComponent<AIController>() != null)
             {
-                other.GetComponent<AIManager>().SetIsWalking();
+                other.GetComponent<AIController>().SetIsWalking();
             }
         }
     }

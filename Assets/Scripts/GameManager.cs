@@ -39,8 +39,9 @@ public class GameManager : MonoBehaviour
         }
 
         player = FindObjectOfType<ThirdPersonShooterController>().gameObject;
-        AI = FindObjectOfType<AIManager>().gameObject;
+        AI = FindObjectOfType<AIController>().gameObject;
         randomMazeGenerator = RandomMazeGenerator.instance;
+        Physics.IgnoreCollision(player.GetComponent<Collider>(), AI.GetComponent<Collider>());
     }
 
     private int[] SetInitialLocation()

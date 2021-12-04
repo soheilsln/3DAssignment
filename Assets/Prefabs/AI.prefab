@@ -409,6 +409,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af376ebec91a66a409499630e7b7eade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bombPrefab: {fileID: 625112572523098938, guid: 96e279f56b09e7b41ba90973eafcd8f7, type: 3}
+  spawnBulletPosition: {fileID: 9002395757659662652}
+  bullet: {fileID: 8480627459787570420, guid: d61b253c138a0fb4097e3246363f0723, type: 3}
+  shootLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  walkTime: 10
+  bombCooldownTime: 10
+  shootCooldownTime: 10
+  shootRange: 10
 --- !u!136 &7922320940409359529
 CapsuleCollider:
   m_ObjectHideFlags: 0

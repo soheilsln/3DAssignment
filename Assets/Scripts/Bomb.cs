@@ -17,6 +17,8 @@ public class Bomb : MonoBehaviour
         gameManager = GameManager.instance;
         player = gameManager.player.transform;
         AI = gameManager.AI.transform;
+        Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>());
+        Physics.IgnoreCollision(AI.GetComponent<Collider>(), GetComponent<Collider>());
     }
 
     private void Update()

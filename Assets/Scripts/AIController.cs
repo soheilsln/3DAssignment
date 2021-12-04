@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class AIManager : MonoBehaviour
+public class AIController : MonoBehaviour
 {
+    public GameObject bombPrefab;
+    public Transform spawnBulletPosition;
+    public GameObject bullet;
+    public LayerMask shootLayerMask;
 
     public RandomMazeGenerator.Cell[,] cells;
     private RandomMazeGenerator randomMazeGenerator;
@@ -21,6 +25,9 @@ public class AIManager : MonoBehaviour
     private int[] keyLocation1;
     private int[] keyLocation2;
     private bool isWalking = false;
+    private bool playerInRange = false;
+    private bool enemyInRange = false;
+    private Transform aimDestination = null;
 
     private const float runMoveDuration = 1.5f;
     private const float walkMoveDuration = 3.75f;
@@ -29,8 +36,17 @@ public class AIManager : MonoBehaviour
     [SerializeField]
     private float walkTime = 10f;
 
+    [SerializeField]
+    private float bombCooldownTime = 10f;
+    private float bombTimeStamp = 0f;
+    [SerializeField]
+    private float shootCooldownTime = 10f;
+    private float shootTimeStamp = 0f;
+    [SerializeField]
+    private float shootRange = 10f;
+
     private Animator animator;
-    
+
 
     private void Awake()
     {
@@ -53,7 +69,8 @@ public class AIManager : MonoBehaviour
         exitPath.Push(exitLocation);
         path.Add(currentLocation);
         visitedCells.Add(currentLocation);
-
+        shootTimeStamp = Time.time + shootCooldownTime;
+        bombTimeStamp = Time.time + bombCooldownTime;
     }
 
     void Update()
@@ -61,6 +78,11 @@ public class AIManager : MonoBehaviour
         if (reachedDestination)
         {
             ChooseAction();
+        }
+
+        if(aimDestination != null)
+        {
+            transform.LookAt(aimDestination);
         }
     }
 
@@ -123,7 +145,7 @@ public class AIManager : MonoBehaviour
         reachedDestination = false;
         currentLocation = exitPath.Pop();
         float moveDuration = isWalking ? walkMoveDuration : runMoveDuration;
-        StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(currentLocation,transform.position.y),
+        StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(currentLocation, transform.position.y),
             moveDuration));
     }
 
@@ -132,7 +154,7 @@ public class AIManager : MonoBehaviour
         visitedCells.Add(cell);
         path.Add(cell);
         float moveDuration = isWalking ? walkMoveDuration : runMoveDuration;
-        StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(cell, transform.position.y), 
+        StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(cell, transform.position.y),
             moveDuration));
         currentLocation = cell;
     }
@@ -141,7 +163,7 @@ public class AIManager : MonoBehaviour
     {
         path.Remove(path[path.Count - 1]);
         float moveDuration = isWalking ? walkMoveDuration : runMoveDuration;
-        StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(cell, transform.position.y), 
+        StartCoroutine(MoveToLocation(gameManager.ConvertCellToLocation(cell, transform.position.y),
             moveDuration));
         currentLocation = cell;
     }
@@ -206,7 +228,7 @@ public class AIManager : MonoBehaviour
         if (exitFound && keyFound)
         {
             //Pop the current keyLocation
-            if(currentLocation.SequenceEqual(keyLocation1) || currentLocation.SequenceEqual(keyLocation2))
+            if (currentLocation.SequenceEqual(keyLocation1) || currentLocation.SequenceEqual(keyLocation2))
             {
                 exitPath.Pop();
             }
@@ -221,7 +243,28 @@ public class AIManager : MonoBehaviour
 
     public void ChooseAction()
     {
-        Move();
+        SetPlayerInRange();
+
+        int rnd = Random.Range(0, 4);
+        if (rnd == 0)
+        {
+            Move();
+        }
+        else if (rnd == 1 && bombTimeStamp <= Time.time)
+        {
+            DropBomb();
+            bombTimeStamp = Time.time + bombCooldownTime;
+        }
+        else if (rnd == 2 && shootTimeStamp <= Time.time && playerInRange)
+        {
+            ShootPlayer();
+            shootTimeStamp = Time.time + shootCooldownTime;
+        }
+        else if (rnd == 3 && shootTimeStamp <= Time.time && enemyInRange)
+        {
+            ShootEnemy();
+            shootTimeStamp = Time.time + shootCooldownTime;
+        }
     }
 
     public void SetIsWalking()
@@ -236,6 +279,52 @@ public class AIManager : MonoBehaviour
             isWalking = true;
             yield return new WaitForSeconds(walkTime);
             isWalking = false;
+        }
+    }
+
+    private void DropBomb()
+    {
+        Instantiate(bombPrefab, transform.position + transform.forward, Quaternion.identity);
+    }
+
+    private void ShootPlayer()
+    {
+        reachedDestination = false;
+        StartCoroutine(Shoot(GameManager.instance.player.transform));
+    }
+
+    private void ShootEnemy()
+    {
+
+    }
+
+    private IEnumerator Shoot(Transform destination)
+    {
+        aimDestination = destination;
+        animator.SetBool("Aim", true);
+        yield return new WaitForSeconds(2f);
+        Vector3 aimDir = ((destination.position + Vector3.up) - spawnBulletPosition.position).normalized;
+        Instantiate(bullet, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+        animator.SetBool("Aim", false);
+        reachedDestination = true;
+        aimDestination = null;
+    }
+
+    private void SetPlayerInRange()
+    {
+        Vector3 playerPosition = GameManager.instance.player.transform.position;
+        playerInRange = Vector3.Distance(playerPosition,
+            transform.position) <= shootRange;
+
+        if (playerInRange)
+        {
+            if (Physics.Raycast(spawnBulletPosition.position, (playerPosition + Vector3.up) - spawnBulletPosition.position,
+            out RaycastHit hit, 999f, shootLayerMask))
+            {
+                playerInRange = true;
+            }
+            else
+                playerInRange = false;
         }
     }
 
