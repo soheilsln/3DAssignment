@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3322622537213745146
+--- !u!1 &5420278528721953995
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,44 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6366704402021920513}
-  - component: {fileID: 4005226164030931353}
+  - component: {fileID: 5420278528721953997}
+  - component: {fileID: 5420278528721953996}
   m_Layer: 0
-  m_Name: MazeGenerator
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6366704402021920513
+--- !u!4 &5420278528721953997
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3322622537213745146}
+  m_GameObject: {fileID: 5420278528721953995}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 4.966527, y: -1.305388, z: 4.843635}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4005226164030931353
+--- !u!114 &5420278528721953996
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3322622537213745146}
+  m_GameObject: {fileID: 5420278528721953995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0134107c6714e140a6cfc90a5b41660, type: 3}
+  m_Script: {fileID: 11500000, guid: a58fda85de3474b44ac25f5473b1e671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 9
-  length: 9
-  scale: 8
-  floorPrefab: {fileID: 2851414229993026260, guid: f9b6bcee8d1d6ce48b8e26c8f191b569, type: 3}
-  wallPrefab: {fileID: 3134236304282904091, guid: 2c7a570a731b5a345b39428127fa96d1, type: 3}
-  roofColliderPrefab: {fileID: 2851414229993026260, guid: c28ecc6b8a7d34c41aacb0f43fe2a4e8, type: 3}
+  initialLocation: 
+  exitLocation: 
+  keyLocation1: 
+  keyLocation2: 
+  player: {fileID: 0}
+  AI: {fileID: 0}
+  enemiesPrefabs:
+  - {fileID: 386488806973550416, guid: b75d36797382312428c17c500efc23ad, type: 3}
+  - {fileID: 9011507696169996851, guid: 8a4ca7f7de7e4bd4f97dd93c2a948b22, type: 3}
+  - {fileID: 386488806973550416, guid: a29b9d8ac74dfb3479bbb9f5bb67f804, type: 3}
+  fireDuration: 5

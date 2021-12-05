@@ -8,9 +8,9 @@ public class RandomMazeGenerator : MonoBehaviour
     public static RandomMazeGenerator instance;
 
     [SerializeField]
-    private int width = 10;
+    private int width = 9;
     [SerializeField]
-    private int length = 10;
+    private int length = 9;
     [SerializeField]
     private int scale = 4;
     [HideInInspector]
@@ -38,14 +38,17 @@ public class RandomMazeGenerator : MonoBehaviour
 
     void Start()
     {
-        if (width < 2)
+        if (width < 3)
         {
-            width = 2;
+            width = 3;
         }
-        if (length < 2)
+        if (length < 3)
         {
-            length = 2;
+            length = 3;
         }
+        //Must be Coefficients of 3
+        width = (width / 3) * 3;
+        length = (length / 3) * 3;
 
         CreateFloor();
         GenerateRandomMazeMatrix(width, length);

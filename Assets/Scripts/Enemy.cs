@@ -22,7 +22,7 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void Start()
     {
         cells = randomMazeGenerator.cells;
-        SetCurrentLocation(GameManager.instance.initialLocation);//GameManager Job
+        currentLocation = gameManager.ConvertLocationToCell(transform.position);
     }
 
     protected virtual void Update()
@@ -105,8 +105,4 @@ public abstract class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void SetCurrentLocation(int[] newCurrentLocation)
-    {
-        currentLocation = newCurrentLocation;
-    }
 }

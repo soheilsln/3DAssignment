@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     [HideInInspector]
     public GameObject AI;
+    [HideInInspector]
+    public List<int[]> enemiesLocations;
+    public GameObject[] enemiesPrefabs;
+
 
     public float fireDuration;
 
@@ -43,28 +47,23 @@ public class GameManager : MonoBehaviour
         randomMazeGenerator = RandomMazeGenerator.instance;
         Physics.IgnoreCollision(player.GetComponent<Collider>(), AI.GetComponent<Collider>());
     }
+    void Start()
+    {
+        cells = RandomMazeGenerator.instance.cells;
+        initialLocation = SetInitialLocation();
+        exitLocation = SetExitLocation();
+        keyLocation1 = SetKeysLocations(1);
+        keyLocation2 = SetKeysLocations(2);
+        InstantiateEnemies();
+    }
+
+    void Update()
+    {
+
+    }
 
     private int[] SetInitialLocation()
     {
-        /*
-        int width = cells.GetLength(0);
-        int lenght = cells.GetLength(1);
-
-        int locationIndex = Random.Range(0, 4);
-
-        switch (locationIndex)
-        {
-            case 0:
-                return new int[] { 0, 0 };
-            case 1:
-                return new int[] { 0, width - 1 };
-            case 2:
-                return new int[] { 0, lenght - 1 };
-            default:
-                return new int[] { width - 1, lenght - 1 };
-        }
-        */
-
         return new int[] { 0, 0 };
     }
 
@@ -85,10 +84,46 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public Vector3 ConvertCellToLocation(int[] cell, float y)
+    private List<int[]> SetEnemiesLocations()
+    {
+        List<int[]> locations = new List<int[]>();
+
+        int numberOfEnemiesWidth = cells.GetLength(0) / 3;
+        int numberOfEnemiesLenght = cells.GetLength(1) / 3;
+
+        for (int i = 0; i < numberOfEnemiesWidth; i++)
+        {
+            for (int j = 0; j < numberOfEnemiesLenght; j++)
+            {
+                if (i != 0 || j != 0)
+                {
+                    int rndWidth = Random.Range(i * 3, i * 3 + 3);
+                    int rndLenght = Random.Range(j * 3, j * 3 + 3);
+                    locations.Add(new int[] { rndWidth, rndLenght });
+                }
+            }
+        }
+
+        return locations;
+    }
+
+    private void InstantiateEnemies()
+    {
+        enemiesLocations = SetEnemiesLocations();
+        GameObject enemies = Instantiate(new GameObject());
+        enemies.name = "Enemies";
+        foreach (int[] enemyLocation in enemiesLocations)
+        {
+            int rnd = Random.Range(0, enemiesPrefabs.Length);
+            Instantiate(enemiesPrefabs[rnd], ConvertCellToLocation(enemyLocation, 
+                enemiesPrefabs[rnd].transform.position.y), Quaternion.identity, enemies.transform);
+        }
+    }
+
+    public Vector3 ConvertCellToLocation(int[] cell, float distanceToFloor)
     {
         int scale = randomMazeGenerator.GetScale();
-        return new Vector3((cell[0] + 0.5f) * scale, y, (cell[1] + 0.5f) * scale);
+        return new Vector3((cell[0] + 0.5f) * scale, distanceToFloor, (cell[1] + 0.5f) * scale);
     }
 
     public int[] ConvertLocationToCell(Vector3 location)
@@ -105,18 +140,5 @@ public class GameManager : MonoBehaviour
         return fireDuration;
     }
 
-    void Start()
-    {
-        cells = RandomMazeGenerator.instance.cells;
-        initialLocation = SetInitialLocation();
-        exitLocation = SetExitLocation();
-        keyLocation1 = SetKeysLocations(1);
-        keyLocation2 = SetKeysLocations(2);
-    }
-
-    void Update()
-    {
-
-    }
 
 }
