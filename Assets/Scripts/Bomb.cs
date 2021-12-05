@@ -31,7 +31,7 @@ public class Bomb : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (!collision.gameObject.CompareTag("Player") && !collision.gameObject.CompareTag("Enemy"))
+        if (!collision.gameObject.CompareTag("Enemy") && !collision.gameObject.GetComponent<Bomb>())
         {
             Explode();
             onFloor = true;

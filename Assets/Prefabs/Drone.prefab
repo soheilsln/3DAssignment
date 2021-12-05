@@ -27,14 +27,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDuration: 10
   bullet: {fileID: 8480627459787570420, guid: d61b253c138a0fb4097e3246363f0723, type: 3}
-  player: {fileID: 0}
-  AI: {fileID: 0}
   spawnBulletPosition: {fileID: 5585168870910579506}
   attackRange: 20
   shootLayerMask:
     serializedVersion: 2
     m_Bits: 1
-  shootCooldownTime: 3
+  shootCooldownTime: 5
 --- !u!1 &7233922625415580392
 GameObject:
   m_ObjectHideFlags: 0
