@@ -28,6 +28,7 @@ public class AIController : MonoBehaviour
     private bool playerInRange = false;
     private bool enemyInRange = false;
     private bool playerInPunchRange = false;
+    private bool playerInBombRange = false;
     private Vector3 aimDestination = Vector3.zero;
     private List<GameObject> enemiesInRangeList;
 
@@ -41,6 +42,8 @@ public class AIController : MonoBehaviour
     [SerializeField]
     private float bombCooldownTime = 10f;
     private float bombTimeStamp = 0f;
+    [SerializeField]
+    private float bombRange = 10f;
     [SerializeField]
     private float shootCooldownTime = 10f;
     private float shootTimeStamp = 0f;
@@ -254,13 +257,15 @@ public class AIController : MonoBehaviour
         SetPlayerInRange();
         SetPlayerInPunchRange();
         SetEnemyInRange();
+        SetPlayerInBombRange();
 
         int rnd = Random.Range(0, 5);
+        rnd = 1;
         if (rnd == 0)
         {
             Move();
         }
-        else if (rnd == 1 && bombTimeStamp <= Time.time)
+        else if (rnd == 1 && bombTimeStamp <= Time.time && playerInBombRange)
         {
             DropBomb();
             bombTimeStamp = Time.time + bombCooldownTime;
@@ -366,6 +371,12 @@ public class AIController : MonoBehaviour
     {
         Vector3 playerPosition = GameManager.instance.player.transform.position;
         playerInPunchRange = currentLocation.SequenceEqual(GameManager.instance.ConvertLocationToCell(playerPosition));
+    }
+
+    private void SetPlayerInBombRange()
+    {
+        Vector3 playerPosition = GameManager.instance.player.transform.position;
+        playerInBombRange = Vector3.Distance(playerPosition, transform.position) <= bombRange;
     }
 
     private void SetEnemyInRange()

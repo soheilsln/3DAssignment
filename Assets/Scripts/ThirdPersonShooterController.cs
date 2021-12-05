@@ -51,6 +51,9 @@ public class ThirdPersonShooterController : MonoBehaviour
     private void Start()
     {
         AI = GameManager.instance.AI.GetComponent<AIController>();
+        shootTimeStamp = Time.time + shootCooldownTime;
+        bombTimeStamp = Time.time + bombCooldownTime;
+        punchTimeStamp = Time.time + punchCooldownTime;
     }
 
     private void Update()
