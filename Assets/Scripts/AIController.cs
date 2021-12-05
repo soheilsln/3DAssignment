@@ -27,6 +27,7 @@ public class AIController : MonoBehaviour
     private bool isWalking = false;
     private bool playerInRange = false;
     private bool enemyInRange = false;
+    private bool playerInPunchRange = false;
     private Transform aimDestination = null;
 
     private const float runMoveDuration = 1.5f;
@@ -44,6 +45,9 @@ public class AIController : MonoBehaviour
     private float shootTimeStamp = 0f;
     [SerializeField]
     private float shootRange = 10f;
+    [SerializeField]
+    private float punchCooldownTime = 10f;
+    private float punchTimeStamp = 0f;
 
     private Animator animator;
 
@@ -71,6 +75,7 @@ public class AIController : MonoBehaviour
         visitedCells.Add(currentLocation);
         shootTimeStamp = Time.time + shootCooldownTime;
         bombTimeStamp = Time.time + bombCooldownTime;
+        punchTimeStamp = Time.time + punchCooldownTime;
     }
 
     void Update()
@@ -80,7 +85,7 @@ public class AIController : MonoBehaviour
             ChooseAction();
         }
 
-        if(aimDestination != null)
+        if (aimDestination != null)
         {
             transform.LookAt(aimDestination);
         }
@@ -244,8 +249,9 @@ public class AIController : MonoBehaviour
     public void ChooseAction()
     {
         SetPlayerInRange();
+        SetPlayerInPunchRange();
 
-        int rnd = Random.Range(0, 4);
+        int rnd = Random.Range(0, 5);
         if (rnd == 0)
         {
             Move();
@@ -264,6 +270,11 @@ public class AIController : MonoBehaviour
         {
             ShootEnemy();
             shootTimeStamp = Time.time + shootCooldownTime;
+        }
+        else if (rnd == 4 && punchTimeStamp <= Time.time && playerInPunchRange)
+        {
+            StartCoroutine(Punch());
+            punchTimeStamp = Time.time + punchCooldownTime;
         }
     }
 
@@ -310,6 +321,15 @@ public class AIController : MonoBehaviour
         aimDestination = null;
     }
 
+    private IEnumerator Punch()
+    {
+        reachedDestination = false;
+        animator.SetTrigger("Punch");
+        GameManager.instance.player.GetComponent<ThirdPersonShooterController>().SetIsWalking();
+        yield return new WaitForSeconds(2f);
+        reachedDestination = true;
+    }
+
     private void SetPlayerInRange()
     {
         Vector3 playerPosition = GameManager.instance.player.transform.position;
@@ -324,8 +344,28 @@ public class AIController : MonoBehaviour
                 playerInRange = true;
             }
             else
+            {
                 playerInRange = false;
+            }
         }
+    }
+
+    private void SetPlayerInPunchRange()
+    {
+        Vector3 playerPosition = GameManager.instance.player.transform.position;
+        if (currentLocation.SequenceEqual(GameManager.instance.ConvertLocationToCell(playerPosition)))
+        {
+            playerInPunchRange = true;
+        }
+        else
+        {
+            playerInPunchRange = false;
+        }
+    }
+
+    public void OnPunchAnimEnds()
+    {
+        //does nothing
     }
 
 }

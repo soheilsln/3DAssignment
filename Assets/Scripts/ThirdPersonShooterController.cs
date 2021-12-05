@@ -103,7 +103,7 @@ public class ThirdPersonShooterController : MonoBehaviour
             starterAssetsInputs.punch = false;
             if (punchTimeStamp <= Time.time)
             {
-                animator.SetBool("Punch", true);
+                animator.SetTrigger("Punch");
                 punchTimeStamp = Time.time + punchCooldownTime;
                 PunchAttack();
             }
@@ -128,7 +128,7 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     public void OnPunchAnimEnds()
     {
-        animator.SetBool("Punch", false);
+        //does nothing
     }
 
     public void SetIsWalking()
