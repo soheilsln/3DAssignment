@@ -354,6 +354,8 @@ GameObject:
   - component: {fileID: 5993532121244160004}
   - component: {fileID: 1046719459909914823}
   - component: {fileID: 7922320940409359529}
+  - component: {fileID: 1203261832}
+  - component: {fileID: 4845817710345637979}
   m_Layer: 0
   m_Name: AI
   m_TagString: Player
@@ -419,6 +421,7 @@ MonoBehaviour:
   bombCooldownTime: 10
   shootCooldownTime: 10
   shootRange: 10
+  punchCooldownTime: 10
 --- !u!136 &7922320940409359529
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -433,6 +436,35 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.93, z: 0}
+--- !u!54 &1203261832
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046719459909914820}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 2
+--- !u!135 &4845817710345637979
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046719459909914820}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1119850055541869079
 GameObject:
   m_ObjectHideFlags: 0

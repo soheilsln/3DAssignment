@@ -28,7 +28,8 @@ public class AIController : MonoBehaviour
     private bool playerInRange = false;
     private bool enemyInRange = false;
     private bool playerInPunchRange = false;
-    private Transform aimDestination = null;
+    private Vector3 aimDestination = Vector3.zero;
+    private List<GameObject> enemiesInRangeList;
 
     private const float runMoveDuration = 1.5f;
     private const float walkMoveDuration = 3.75f;
@@ -58,6 +59,8 @@ public class AIController : MonoBehaviour
         gameManager = GameManager.instance;
         animator = GetComponent<Animator>();
         animator.SetFloat("MotionSpeed", 1f);
+        GetComponent<SphereCollider>().radius = shootRange;
+        enemiesInRangeList = new List<GameObject>();
     }
 
     void Start()
@@ -85,7 +88,7 @@ public class AIController : MonoBehaviour
             ChooseAction();
         }
 
-        if (aimDestination != null)
+        if (aimDestination != Vector3.zero)
         {
             transform.LookAt(aimDestination);
         }
@@ -250,6 +253,7 @@ public class AIController : MonoBehaviour
     {
         SetPlayerInRange();
         SetPlayerInPunchRange();
+        SetEnemyInRange();
 
         int rnd = Random.Range(0, 5);
         if (rnd == 0)
@@ -301,24 +305,34 @@ public class AIController : MonoBehaviour
     private void ShootPlayer()
     {
         reachedDestination = false;
-        StartCoroutine(Shoot(GameManager.instance.player.transform));
+        StartCoroutine(Shoot(GameManager.instance.player.transform, true));
     }
 
     private void ShootEnemy()
     {
-
+        reachedDestination = false;
+        int rnd = Random.Range(0, enemiesInRangeList.Count);
+        if (enemiesInRangeList[rnd].GetComponent<Runner>())
+        {
+            StartCoroutine(Shoot(enemiesInRangeList[rnd].transform, true));
+        }
+        else
+        {
+            StartCoroutine(Shoot(enemiesInRangeList[rnd].transform, false));
+        }
     }
 
-    private IEnumerator Shoot(Transform destination)
+    private IEnumerator Shoot(Transform destination, bool isPlayer)
     {
-        aimDestination = destination;
+        aimDestination = new Vector3(destination.position.x, transform.position.y, destination.position.z);
         animator.SetBool("Aim", true);
         yield return new WaitForSeconds(2f);
-        Vector3 aimDir = ((destination.position + Vector3.up) - spawnBulletPosition.position).normalized;
+        Vector3 offset = isPlayer ? Vector3.up : Vector3.zero;
+        Vector3 aimDir = ((destination.position + offset) - spawnBulletPosition.position).normalized;
         Instantiate(bullet, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
         animator.SetBool("Aim", false);
         reachedDestination = true;
-        aimDestination = null;
+        aimDestination = Vector3.zero;
     }
 
     private IEnumerator Punch()
@@ -333,19 +347,17 @@ public class AIController : MonoBehaviour
     private void SetPlayerInRange()
     {
         Vector3 playerPosition = GameManager.instance.player.transform.position;
-        playerInRange = Vector3.Distance(playerPosition,
-            transform.position) <= shootRange;
+        playerInRange = Vector3.Distance(playerPosition, transform.position) <= shootRange;
 
         if (playerInRange)
         {
-            if (Physics.Raycast(spawnBulletPosition.position, (playerPosition + Vector3.up) - spawnBulletPosition.position,
-            out RaycastHit hit, 999f, shootLayerMask))
+            if(Physics.Raycast(spawnBulletPosition.position, (playerPosition + Vector3.up) -
+                spawnBulletPosition.position, out RaycastHit hit, 999f, shootLayerMask))
             {
-                playerInRange = true;
-            }
-            else
-            {
-                playerInRange = false;
+                if (hit.transform.CompareTag("Player"))
+                    playerInRange = true;
+                else
+                    playerInRange = false;
             }
         }
     }
@@ -353,19 +365,51 @@ public class AIController : MonoBehaviour
     private void SetPlayerInPunchRange()
     {
         Vector3 playerPosition = GameManager.instance.player.transform.position;
-        if (currentLocation.SequenceEqual(GameManager.instance.ConvertLocationToCell(playerPosition)))
-        {
-            playerInPunchRange = true;
-        }
-        else
-        {
-            playerInPunchRange = false;
-        }
+        playerInPunchRange = currentLocation.SequenceEqual(GameManager.instance.ConvertLocationToCell(playerPosition));
+    }
+
+    private void SetEnemyInRange()
+    {
+        enemyInRange = enemiesInRangeList.Count > 0;
     }
 
     public void OnPunchAnimEnds()
     {
         //does nothing
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Vector3 offset;
+            if (other.gameObject.GetComponent<Runner>())
+                offset = Vector3.up;
+            else
+                offset = Vector3.zero;
+
+            if (Physics.Raycast(spawnBulletPosition.position, (other.transform.position + offset) -
+                spawnBulletPosition.position, out RaycastHit hit, 999f, shootLayerMask))
+            {
+                if (!hit.transform.CompareTag("Enemy") && enemiesInRangeList.Contains(other.gameObject))
+                    enemiesInRangeList.Remove(other.gameObject);
+                if (hit.transform.CompareTag("Enemy") && !enemiesInRangeList.Contains(other.gameObject))
+                    enemiesInRangeList.Add(other.gameObject);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy") && enemiesInRangeList.Contains(other.gameObject))
+        {
+            enemiesInRangeList.Remove(other.gameObject);
+        }
+    }
+
+    public List<GameObject> GetEnemiesInRangeList()
+    {
+        return enemiesInRangeList;
     }
 
 }

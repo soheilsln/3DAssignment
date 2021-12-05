@@ -9,7 +9,8 @@ public class Bullet : MonoBehaviour
 
     private void Awake()
     {
-        rgbody = GetComponent<Rigidbody>(); 
+        rgbody = GetComponent<Rigidbody>();
+        Physics.IgnoreCollision(GameManager.instance.AI.GetComponent<SphereCollider>(),GetComponent<Collider>());
     }
 
     private void Start()

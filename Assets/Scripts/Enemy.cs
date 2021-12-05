@@ -98,6 +98,10 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Die()
     {
+        List<GameObject> enemiesInAIRangeList = GameManager.instance.AI.GetComponent<AIController>().GetEnemiesInRangeList();
+        if (enemiesInAIRangeList.Contains(gameObject))
+            enemiesInAIRangeList.Remove(gameObject);
+        GetComponent<Collider>().enabled = false;
         Destroy(gameObject);
     }
 

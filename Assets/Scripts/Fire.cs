@@ -8,6 +8,7 @@ public class Fire : MonoBehaviour
     private void Start()
     {
         StartCoroutine(DestroyFire(GameManager.instance.GetFireDuration()));
+        Physics.IgnoreCollision(GameManager.instance.AI.GetComponent<SphereCollider>(), GetComponent<BoxCollider>());
     }
 
     private IEnumerator DestroyFire(float duration)
