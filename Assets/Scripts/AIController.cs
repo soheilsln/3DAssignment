@@ -52,6 +52,7 @@ public class AIController : MonoBehaviour
     [SerializeField]
     private float punchCooldownTime = 10f;
     private float punchTimeStamp = 0f;
+    private bool keyCollected = false;
 
     private Animator animator;
 
@@ -82,6 +83,7 @@ public class AIController : MonoBehaviour
         shootTimeStamp = Time.time + shootCooldownTime;
         bombTimeStamp = Time.time + bombCooldownTime;
         punchTimeStamp = Time.time + punchCooldownTime;
+        keyCollected = false;
     }
 
     void Update()
@@ -260,7 +262,6 @@ public class AIController : MonoBehaviour
         SetPlayerInBombRange();
 
         int rnd = Random.Range(0, 5);
-        rnd = 1;
         if (rnd == 0)
         {
             Move();
@@ -421,6 +422,16 @@ public class AIController : MonoBehaviour
     public List<GameObject> GetEnemiesInRangeList()
     {
         return enemiesInRangeList;
+    }
+
+    public void CollectKey()
+    {
+        keyCollected = true;
+    }
+
+    public bool GetKeyCollected()
+    {
+        return keyCollected;
     }
 
 }

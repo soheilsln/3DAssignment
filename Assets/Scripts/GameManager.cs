@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public List<int[]> enemiesLocations;
     public GameObject[] enemiesPrefabs;
+    public GameObject keyPrefab;
 
 
     public float fireDuration;
@@ -52,8 +53,7 @@ public class GameManager : MonoBehaviour
         cells = RandomMazeGenerator.instance.cells;
         initialLocation = SetInitialLocation();
         exitLocation = SetExitLocation();
-        keyLocation1 = SetKeysLocations(1);
-        keyLocation2 = SetKeysLocations(2);
+        InstantiateKeys();
         InstantiateEnemies();
     }
 
@@ -105,6 +105,20 @@ public class GameManager : MonoBehaviour
         }
 
         return locations;
+    }
+
+    private void InstantiateKeys()
+    {
+        keyLocation1 = SetKeysLocations(1);
+        keyLocation2 = SetKeysLocations(2);
+
+        GameObject key1 = Instantiate(keyPrefab, ConvertCellToLocation(keyLocation1,
+                keyPrefab.transform.position.y), keyPrefab.transform.rotation);
+        key1.name = "Key 1";
+
+        GameObject key2 = Instantiate(keyPrefab, ConvertCellToLocation(keyLocation2,
+                keyPrefab.transform.position.y), keyPrefab.transform.rotation);
+        key2.name = "Key 2";
     }
 
     private void InstantiateEnemies()

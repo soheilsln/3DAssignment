@@ -53,4 +53,5 @@ MonoBehaviour:
   - {fileID: 386488806973550416, guid: b75d36797382312428c17c500efc23ad, type: 3}
   - {fileID: 9011507696169996851, guid: 8a4ca7f7de7e4bd4f97dd93c2a948b22, type: 3}
   - {fileID: 386488806973550416, guid: a29b9d8ac74dfb3479bbb9f5bb67f804, type: 3}
+  keyPrefab: {fileID: 3883071256461113718, guid: 071989322bc7ac441a83989fbbde3a20, type: 3}
   fireDuration: 5

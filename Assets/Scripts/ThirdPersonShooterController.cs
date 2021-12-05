@@ -35,6 +35,7 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField]
     private float bombCooldownTime = 10f;
     private float bombTimeStamp = 0f;
+    private bool keyCollected = false;
 
     private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInputs;
@@ -54,6 +55,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         shootTimeStamp = Time.time + shootCooldownTime;
         bombTimeStamp = Time.time + bombCooldownTime;
         punchTimeStamp = Time.time + punchCooldownTime;
+        keyCollected = false;
     }
 
     private void Update()
@@ -161,6 +163,16 @@ public class ThirdPersonShooterController : MonoBehaviour
     private void DropBomb()
     {
         Instantiate(bombPrefab, transform.position + transform.forward, Quaternion.identity);
+    }
+
+    public void CollectKey()
+    {
+        keyCollected = true;
+    }
+
+    public bool GetKeyCollected()
+    {
+        return keyCollected;
     }
 
 }
