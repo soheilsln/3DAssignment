@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public List<int[]> enemiesLocations;
     public GameObject[] enemiesPrefabs;
     public GameObject keyPrefab;
+    public GameObject doorPrefab;
 
 
     public float fireDuration;
@@ -52,8 +53,8 @@ public class GameManager : MonoBehaviour
     {
         cells = RandomMazeGenerator.instance.cells;
         initialLocation = SetInitialLocation();
-        exitLocation = SetExitLocation();
         InstantiateKeys();
+        InstantiateDoor();
         InstantiateEnemies();
     }
 
@@ -121,6 +122,16 @@ public class GameManager : MonoBehaviour
         key2.name = "Key 2";
     }
 
+    private void InstantiateDoor()
+    {
+        exitLocation = SetExitLocation();
+        GameObject door = Instantiate(doorPrefab, ConvertCellToLocation(exitLocation,
+                doorPrefab.transform.position.y), doorPrefab.transform.rotation);
+        door.transform.position = new Vector3(door.transform.position.x + randomMazeGenerator.GetScale() / 4f,
+            door.transform.position.y, door.transform.position.x + randomMazeGenerator.GetScale() / 4f);
+        door.name = "Door";
+    }
+
     private void InstantiateEnemies()
     {
         enemiesLocations = SetEnemiesLocations();
@@ -129,7 +140,7 @@ public class GameManager : MonoBehaviour
         foreach (int[] enemyLocation in enemiesLocations)
         {
             int rnd = Random.Range(0, enemiesPrefabs.Length);
-            Instantiate(enemiesPrefabs[rnd], ConvertCellToLocation(enemyLocation, 
+            Instantiate(enemiesPrefabs[rnd], ConvertCellToLocation(enemyLocation,
                 enemiesPrefabs[rnd].transform.position.y), Quaternion.identity, enemies.transform);
         }
     }

@@ -833,6 +833,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5420278528721953996, guid: d3854368ade1a564984ff84ab7be4cec, type: 3}
+      propertyPath: doorPrefab
+      value: 
+      objectReference: {fileID: 3920721678792051285, guid: 0992024cc5e307749bb3c32d6d66d360, type: 3}
     - target: {fileID: 5420278528721953997, guid: d3854368ade1a564984ff84ab7be4cec, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -892,11 +896,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4005226164030931353, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: width
-      value: 9
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4005226164030931353, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: length
-      value: 9
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6366704402021920513, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: m_RootOrder
