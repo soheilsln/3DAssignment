@@ -131,10 +131,6 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     }
 
-    public void OnPunchAnimEnds()
-    {
-        //does nothing
-    }
 
     public void SetIsWalking()
     {

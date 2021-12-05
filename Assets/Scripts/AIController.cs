@@ -203,7 +203,7 @@ public class AIController : MonoBehaviour
 
     private void Move()
     {
-        if (!currentLocation.SequenceEqual(keyLocation1) && !currentLocation.SequenceEqual(keyLocation2) && !keyFound)
+        if (!GetKeyCollected() && !keyFound)
         {
             if (currentLocation.SequenceEqual(exitLocation))
             {
@@ -249,6 +249,10 @@ public class AIController : MonoBehaviour
             if (!currentLocation.SequenceEqual(exitLocation))
             {
                 ChoosePathToExit();
+            }
+            else
+            {
+                WonGame();
             }
         }
 
@@ -335,7 +339,9 @@ public class AIController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Vector3 offset = isPlayer ? Vector3.up : Vector3.zero;
         Vector3 aimDir = ((destination.position + offset) - spawnBulletPosition.position).normalized;
-        Instantiate(bullet, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+        GameObject bulletInstance = Instantiate(bullet, spawnBulletPosition.position, 
+            Quaternion.LookRotation(aimDir, Vector3.up));
+        Physics.IgnoreCollision(bulletInstance.GetComponent<Collider>(),GetComponent<Collider>());
         animator.SetBool("Aim", false);
         reachedDestination = true;
         aimDestination = Vector3.zero;
@@ -385,11 +391,6 @@ public class AIController : MonoBehaviour
         enemyInRange = enemiesInRangeList.Count > 0;
     }
 
-    public void OnPunchAnimEnds()
-    {
-        //does nothing
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
@@ -432,6 +433,11 @@ public class AIController : MonoBehaviour
     public bool GetKeyCollected()
     {
         return keyCollected;
+    }
+
+    private void WonGame()
+    {
+        Debug.Log("AI Won");
     }
 
 }

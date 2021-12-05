@@ -896,11 +896,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4005226164030931353, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: width
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4005226164030931353, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: length
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6366704402021920513, guid: 0e213df648c84104393c7e5e91baad4e, type: 3}
       propertyPath: m_RootOrder
