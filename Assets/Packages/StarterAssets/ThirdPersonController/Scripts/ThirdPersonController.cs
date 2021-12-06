@@ -166,9 +166,8 @@ namespace StarterAssets
             // if there is no input, set the target speed to 0
             if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
-            if (starterAssetsInputs.aim)
-                targetSpeed = 0.0f;
-            
+            targetSpeed = SetSpeedToZeroOnAim(targetSpeed);
+
 
             // a reference to the players current horizontal velocity
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -251,6 +250,14 @@ namespace StarterAssets
         public void SetRotateOnMove(bool newRotateOnMove)
         {
             _rotateOnMove = newRotateOnMove;
+        }
+
+        public float SetSpeedToZeroOnAim(float targetSpeed)
+        {
+            if (starterAssetsInputs.aim)
+                return 0.0f;
+            else
+                return targetSpeed;
         }
     }
 }

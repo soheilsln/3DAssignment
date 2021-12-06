@@ -401,6 +401,30 @@ public class AIController : MonoBehaviour
         enemyInRange = enemiesInRangeList.Count > 0;
     }
 
+    public List<GameObject> GetEnemiesInRangeList()
+    {
+        return enemiesInRangeList;
+    }
+
+    public void CollectKey()
+    {
+        keyCollected = true;
+    }
+
+    public bool GetKeyCollected()
+    {
+        return keyCollected;
+    }
+
+    private void WonGame()
+    {
+        isWonGame = true;
+        isGameFinished = true;
+        //Set Winner to AI
+        gameManager.SetWinner(2);
+        gameManager.uIManager.ActiveUIPanelObjects(3);
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
@@ -430,28 +454,5 @@ public class AIController : MonoBehaviour
         }
     }
 
-    public List<GameObject> GetEnemiesInRangeList()
-    {
-        return enemiesInRangeList;
-    }
-
-    public void CollectKey()
-    {
-        keyCollected = true;
-    }
-
-    public bool GetKeyCollected()
-    {
-        return keyCollected;
-    }
-
-    private void WonGame()
-    {
-        isWonGame = true;
-        isGameFinished = true;
-        //Set Winner to AI
-        gameManager.SetWinner(2);
-        gameManager.uIManager.ActiveUIPanelObjects(3);
-    }
 
 }
