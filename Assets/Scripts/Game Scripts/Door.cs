@@ -6,15 +6,16 @@ public class Door : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.GetComponent<ThirdPersonShooterController>())
+        if (other.transform.GetComponent<PlayerController>() && 
+            !GameManager.instance.AI.GetComponent<AIController>().isGameFinished)
         {
-            if (other.transform.GetComponent<ThirdPersonShooterController>().GetKeyCollected())
+            if (other.transform.GetComponent<PlayerController>().GetKeyCollected())
             {
-                other.transform.GetComponent<ThirdPersonShooterController>().WonGame();
+                other.transform.GetComponent<PlayerController>().WonGame();
             }
             else
             {
-                other.transform.GetComponent<ThirdPersonShooterController>().KeyRequired();
+                other.transform.GetComponent<PlayerController>().KeyRequired();
             }
         }
     }

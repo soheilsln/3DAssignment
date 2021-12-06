@@ -5,7 +5,7 @@ using Cinemachine;
 using StarterAssets;
 using System.Linq;
 
-public class ThirdPersonShooterController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public GameObject bombPrefab;
 
@@ -29,7 +29,8 @@ public class ThirdPersonShooterController : MonoBehaviour
     public float punchCooldownTime = 10f;
     [HideInInspector]
     public float punchTimeStamp = 0f;
-    private bool isWalking = false;
+    [HideInInspector]
+    public bool isWalking = false;
     [SerializeField]
     private float walkTime = 10f;
     public float bombCooldownTime = 10f;

@@ -77,7 +77,7 @@ namespace StarterAssets
         private GameObject _mainCamera;
         private bool _rotateOnMove = true;
         private StarterAssetsInputs starterAssetsInputs;
-        private ThirdPersonShooterController player;
+        private PlayerController player;
 
 
         private const float _threshold = 0.01f;
@@ -101,7 +101,7 @@ namespace StarterAssets
             _input = GetComponent<StarterAssetsInputs>();
 
             AssignAnimationIDs();
-            player = GameManager.instance.player.GetComponent<ThirdPersonShooterController>();
+            player = GameManager.instance.player.GetComponent<PlayerController>();
 
         }
 

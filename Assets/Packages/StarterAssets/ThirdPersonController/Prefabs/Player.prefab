@@ -1163,6 +1163,7 @@ MonoBehaviour:
   shoot: 0
   punch: 0
   bomb: 0
+  pause: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1

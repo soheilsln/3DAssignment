@@ -13,10 +13,10 @@ public class Key : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (other.GetComponent<ThirdPersonShooterController>() && 
-                !other.GetComponent<ThirdPersonShooterController>().GetKeyCollected())
+            if (other.GetComponent<PlayerController>() && 
+                !other.GetComponent<PlayerController>().GetKeyCollected())
             {
-                other.GetComponent<ThirdPersonShooterController>().CollectKey();
+                other.GetComponent<PlayerController>().CollectKey();
                 Destroy(gameObject);
             }
             else if (other.GetComponent<AIController>() &&

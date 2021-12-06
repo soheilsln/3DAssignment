@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
 
-        player = FindObjectOfType<ThirdPersonShooterController>().gameObject;
+        player = FindObjectOfType<PlayerController>().gameObject;
         AI = FindObjectOfType<AIController>().gameObject;
         uIManager = FindObjectOfType<GameUIManager>();
         randomMazeGenerator = RandomMazeGenerator.instance;

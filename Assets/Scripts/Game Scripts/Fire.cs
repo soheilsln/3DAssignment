@@ -21,9 +21,9 @@ public class Fire : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (other.GetComponent<ThirdPersonShooterController>() != null)
+            if (other.GetComponent<PlayerController>() != null)
             {
-                other.GetComponent<ThirdPersonShooterController>().SetIsWalking();
+                other.GetComponent<PlayerController>().SetIsWalking();
             }
             else if (other.GetComponent<AIController>() != null)
             {

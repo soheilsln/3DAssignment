@@ -11,6 +11,7 @@ public class GameUIManager : MonoBehaviour
     public Text shootCoolDown;
     public Text bombCoolDown;
     public Text punchCoolDown;
+    public Text canRunText;
 
     public GameObject UIPanel;
     // id : 1
@@ -26,16 +27,17 @@ public class GameUIManager : MonoBehaviour
     public GameObject pausePanel;
     public GameObject pausePanelFirstSelected;
 
-    private ThirdPersonShooterController player;
+    private PlayerController player;
     private StarterAssetsInputs starterAssetsInputs;
     private EventSystem eventSystem;
     private float shootTime;
     private float bombTime;
     private float punchTime;
+    private bool canRun;
 
     private void Start()
     {
-        player = GameManager.instance.player.GetComponent<ThirdPersonShooterController>();
+        player = GameManager.instance.player.GetComponent<PlayerController>();
         starterAssetsInputs = player.GetComponent<StarterAssetsInputs>();
         eventSystem = EventSystem.current;
     }
@@ -65,11 +67,13 @@ public class GameUIManager : MonoBehaviour
         shootTime = (player.shootTimeStamp - Time.time) > 0 ? player.shootTimeStamp - Time.time : 0f;
         bombTime = (player.bombTimeStamp - Time.time) > 0 ? player.bombTimeStamp - Time.time : 0f;
         punchTime = (player.punchTimeStamp - Time.time) > 0 ? player.punchTimeStamp - Time.time : 0f;
+        canRun = !player.isWalking;
 
         shootCoolDown.text = "Shoot in: " + shootTime.ToString("0.0") + " Seconds";
         bombCoolDown.text = "Drop Bomb in: " + bombTime.ToString("0.0") + " Seconds";
         punchCoolDown.text = "Punch in: " + punchTime.ToString("0.0") + " Seconds";
-
+        canRunText.text = canRun ? "You Can Run." : "You Can Not Run.";
+        
         if (shootTime == 0)
             shootCoolDown.color = Color.green;
         else
@@ -84,6 +88,11 @@ public class GameUIManager : MonoBehaviour
             punchCoolDown.color = Color.green;
         else
             punchCoolDown.color = Color.red;
+
+        if (canRun)
+            canRunText.color = Color.green;
+        else
+            canRunText.color = Color.red;
     }
 
     public void ActiveUIPanelObjects(int id)

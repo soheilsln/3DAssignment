@@ -354,7 +354,7 @@ public class AIController : MonoBehaviour
     {
         reachedDestination = false;
         animator.SetTrigger("Punch");
-        GameManager.instance.player.GetComponent<ThirdPersonShooterController>().SetIsWalking();
+        GameManager.instance.player.GetComponent<PlayerController>().SetIsWalking();
         yield return new WaitForSeconds(2f);
         reachedDestination = true;
     }
