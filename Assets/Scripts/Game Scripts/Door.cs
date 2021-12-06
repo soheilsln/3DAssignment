@@ -10,7 +10,7 @@ public class Door : MonoBehaviour
         {
             if (other.transform.GetComponent<ThirdPersonShooterController>().GetKeyCollected())
             {
-                Debug.Log("Player Won");
+                other.transform.GetComponent<ThirdPersonShooterController>().WonGame();
             }
             else
             {

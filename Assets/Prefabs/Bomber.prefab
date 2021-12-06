@@ -8,7 +8,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386488806973550416}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 4.127498, y: 0.5828068, z: 3.7607212}
@@ -28,6 +28,8 @@ MonoBehaviour:
   moveDuration: 10
   bombPrefab: {fileID: 625112572523098938, guid: 96e279f56b09e7b41ba90973eafcd8f7, type: 3}
   bombSpawnPoint: {fileID: 5585168870910579506}
+  bombCooldownTime: 10
+  attackRange: 10
 --- !u!1 &7233922625415580392
 GameObject:
   m_ObjectHideFlags: 0

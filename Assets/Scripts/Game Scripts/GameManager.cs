@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public RandomMazeGenerator.Cell[,] cells;
     private RandomMazeGenerator randomMazeGenerator;
+    private int winner = 0;
 
     [HideInInspector]
     public int[] initialLocation;
@@ -35,19 +36,12 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-        else if (instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        if (instance == this)
-        {
-            DontDestroyOnLoad(this.gameObject);
-        }
 
         player = FindObjectOfType<ThirdPersonShooterController>().gameObject;
         AI = FindObjectOfType<AIController>().gameObject;
         randomMazeGenerator = RandomMazeGenerator.instance;
         Physics.IgnoreCollision(player.GetComponent<Collider>(), AI.GetComponent<Collider>());
+        winner = 0;
     }
     void Start()
     {
@@ -165,5 +159,13 @@ public class GameManager : MonoBehaviour
         return fireDuration;
     }
 
+    public void SetWinner(int winnerID)
+    {
+        winner = winnerID;
+    }
 
+    public int GetWinner()
+    {
+        return winner;
+    }
 }

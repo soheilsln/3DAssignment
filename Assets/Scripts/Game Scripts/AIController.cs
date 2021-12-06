@@ -437,7 +437,8 @@ public class AIController : MonoBehaviour
 
     private void WonGame()
     {
-        Debug.Log("AI Won");
+        //Set Winner to AI
+        gameManager.SetWinner(2);
     }
 
 }

@@ -8,11 +8,11 @@ public class RandomMazeGenerator : MonoBehaviour
     public static RandomMazeGenerator instance;
 
     [SerializeField]
-    private int width = 9;
+    private int width = 3;
     [SerializeField]
-    private int length = 9;
+    private int length = 3;
     [SerializeField]
-    private int scale = 4;
+    private int scale = 8;
     [HideInInspector]
     public Cell[,] cells;
 
@@ -26,29 +26,29 @@ public class RandomMazeGenerator : MonoBehaviour
         {
             instance = this;
         }
-        else if (instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        if (instance == this)
-        {
-            DontDestroyOnLoad(this.gameObject);
-        }
     }
 
     void Start()
     {
-        if (width < 3)
+        if (!PlayerPrefs.HasKey("width") && !PlayerPrefs.HasKey("lenght"))
         {
-            width = 3;
+            if (width < 3)
+            {
+                width = 3;
+            }
+            if (length < 3)
+            {
+                length = 3;
+            }
+            //Must be Coefficients of 3
+            width = (width / 3) * 3;
+            length = (length / 3) * 3;
         }
-        if (length < 3)
+        else
         {
-            length = 3;
+            width = PlayerPrefs.GetInt("width");
+            length = PlayerPrefs.GetInt("lenght");
         }
-        //Must be Coefficients of 3
-        width = (width / 3) * 3;
-        length = (length / 3) * 3;
 
         CreateFloor();
         GenerateRandomMazeMatrix(width, length);
@@ -235,6 +235,14 @@ public class RandomMazeGenerator : MonoBehaviour
     public int GetScale()
     {
         return scale;
+    }
+
+    public void StartNextLevel()
+    {
+        width += 3;
+        length += 3;
+        PlayerPrefs.SetInt("width", width);
+        PlayerPrefs.SetInt("lenght", length);
     }
 
 }

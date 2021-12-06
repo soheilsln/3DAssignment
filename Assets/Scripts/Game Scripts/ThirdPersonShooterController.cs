@@ -131,7 +131,6 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     }
 
-
     public void SetIsWalking()
     {
         StartCoroutine(StartWalkProcess());
@@ -169,6 +168,12 @@ public class ThirdPersonShooterController : MonoBehaviour
     public bool GetKeyCollected()
     {
         return keyCollected;
+    }
+
+    public void WonGame()
+    {
+        //Set Winner to Player
+        GameManager.instance.SetWinner(1);
     }
 
 }
