@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     public GameObject[] enemiesPrefabs;
     public GameObject keyPrefab;
     public GameObject doorPrefab;
+    [HideInInspector]
+    public GameUIManager uIManager;
 
 
     public float fireDuration;
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
 
         player = FindObjectOfType<ThirdPersonShooterController>().gameObject;
         AI = FindObjectOfType<AIController>().gameObject;
+        uIManager = FindObjectOfType<GameUIManager>();
         randomMazeGenerator = RandomMazeGenerator.instance;
         Physics.IgnoreCollision(player.GetComponent<Collider>(), AI.GetComponent<Collider>());
         winner = 0;

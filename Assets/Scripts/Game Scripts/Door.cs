@@ -14,7 +14,7 @@ public class Door : MonoBehaviour
             }
             else
             {
-                Debug.Log("First Collect Key");
+                other.transform.GetComponent<ThirdPersonShooterController>().KeyRequired();
             }
         }
     }

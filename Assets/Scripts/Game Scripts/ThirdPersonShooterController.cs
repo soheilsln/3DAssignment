@@ -172,8 +172,16 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     public void WonGame()
     {
+        AI.isGameFinished = true;
         //Set Winner to Player
         GameManager.instance.SetWinner(1);
+        RandomMazeGenerator.instance.StartNextLevel();
+        GameManager.instance.uIManager.ActiveUIPanelObjects(2);
+    }
+
+    public void KeyRequired()
+    {
+        GameManager.instance.uIManager.ActiveUIPanelObjects(1);
     }
 
 }

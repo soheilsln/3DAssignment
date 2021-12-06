@@ -53,6 +53,9 @@ public class AIController : MonoBehaviour
     private float punchCooldownTime = 10f;
     private float punchTimeStamp = 0f;
     private bool keyCollected = false;
+    private bool isWonGame = false;
+    [HideInInspector]
+    public bool isGameFinished = false;
 
     private Animator animator;
 
@@ -88,7 +91,7 @@ public class AIController : MonoBehaviour
 
     void Update()
     {
-        if (reachedDestination)
+        if (reachedDestination && !isGameFinished)
         {
             ChooseAction();
         }
@@ -250,7 +253,7 @@ public class AIController : MonoBehaviour
             {
                 ChoosePathToExit();
             }
-            else
+            else if(!isWonGame)
             {
                 WonGame();
             }
@@ -437,8 +440,11 @@ public class AIController : MonoBehaviour
 
     private void WonGame()
     {
+        isWonGame = true;
+        isGameFinished = true;
         //Set Winner to AI
         gameManager.SetWinner(2);
+        gameManager.uIManager.ActiveUIPanelObjects(3);
     }
 
 }

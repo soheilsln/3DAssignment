@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -85,7 +86,7 @@ public class GameUIManager : MonoBehaviour
             punchCoolDown.color = Color.red;
     }
 
-    private void ActiveUIPanelObjects(int id)
+    public void ActiveUIPanelObjects(int id)
     {
         UIPanel.SetActive(true);
         switch (id)
@@ -95,31 +96,52 @@ public class GameUIManager : MonoBehaviour
                 continuePanel.SetActive(false);
                 failedPanel.SetActive(false);
                 pausePanel.SetActive(false);
-                eventSystem.SetSelectedGameObject(keyRequiredPanelFirstSelected, new BaseEventData(eventSystem));
+                eventSystem.SetSelectedGameObject(keyRequiredPanelFirstSelected);
                 break;
             case 2:
                 keyRequiredPanel.SetActive(false);
                 continuePanel.SetActive(true);
                 failedPanel.SetActive(false);
                 pausePanel.SetActive(false);
-                eventSystem.SetSelectedGameObject(continuePanelFirstSelected, new BaseEventData(eventSystem));
+                eventSystem.SetSelectedGameObject(continuePanelFirstSelected);
                 break;
             case 3:
                 keyRequiredPanel.SetActive(false);
                 continuePanel.SetActive(false);
                 failedPanel.SetActive(true);
                 pausePanel.SetActive(false);
-                eventSystem.SetSelectedGameObject(failedPanelFirstSelected, new BaseEventData(eventSystem));
+                eventSystem.SetSelectedGameObject(failedPanelFirstSelected);
                 break;
             case 4:
                 keyRequiredPanel.SetActive(false);
                 continuePanel.SetActive(false);
                 failedPanel.SetActive(false);
                 pausePanel.SetActive(true);
-                eventSystem.SetSelectedGameObject(pausePanelFirstSelected, new BaseEventData(eventSystem));
+                eventSystem.SetSelectedGameObject(pausePanelFirstSelected);
                 break;
             default:
                 break;
         }
+    }
+
+    public void OnOKClicked()
+    {
+        keyRequiredPanel.SetActive(false);
+        UIPanel.SetActive(false);
+    }
+
+    public void OnMainMenuClicked()
+    {
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
+
+    public void OnRetryClicked()
+    {
+        SceneManager.LoadScene(2, LoadSceneMode.Single);
+    }
+
+    public void OnNextLevelClicked()
+    {
+        SceneManager.LoadScene(2, LoadSceneMode.Single);
     }
 }
