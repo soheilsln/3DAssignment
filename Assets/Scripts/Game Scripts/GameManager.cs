@@ -29,9 +29,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public GameUIManager uIManager;
 
-
-    public float fireDuration;
-
     void Awake()
     {
         if (instance == null)
@@ -46,6 +43,7 @@ public class GameManager : MonoBehaviour
         Physics.IgnoreCollision(player.GetComponent<Collider>(), AI.GetComponent<Collider>());
         winner = 0;
     }
+
     void Start()
     {
         cells = RandomMazeGenerator.instance.cells;
@@ -53,11 +51,6 @@ public class GameManager : MonoBehaviour
         InstantiateKeys();
         InstantiateDoor();
         InstantiateEnemies();
-    }
-
-    void Update()
-    {
-
     }
 
     private int[] SetInitialLocation()
@@ -155,11 +148,6 @@ public class GameManager : MonoBehaviour
         cell[0] = Mathf.FloorToInt((location.x / (float)scale));
         cell[1] = Mathf.FloorToInt((location.z / (float)scale));
         return cell;
-    }
-
-    public float GetFireDuration()
-    {
-        return fireDuration;
     }
 
     public void SetWinner(int winnerID)

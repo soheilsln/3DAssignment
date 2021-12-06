@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Fire : MonoBehaviour
 {
-
+    public float fireDuration = 5f;
     private void Start()
     {
-        StartCoroutine(DestroyFire(GameManager.instance.GetFireDuration()));
+        StartCoroutine(DestroyFire(fireDuration));
         Physics.IgnoreCollision(GameManager.instance.AI.GetComponent<SphereCollider>(), GetComponent<BoxCollider>());
     }
 

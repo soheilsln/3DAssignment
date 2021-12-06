@@ -156,19 +156,6 @@ public class RandomMazeGenerator : MonoBehaviour
         return false;
     }
 
-    //Deletes duplicate walls
-    //private void CleanCells(Cell[,] cells)
-    //{
-    //    for (int i = 0; i < width; i++)
-    //        for (int j = 0; j < length; j++)
-    //        {
-    //            if (cells[i, j].hasWalls[0] && i > 0)
-    //                cells[i - 1, j].hasWalls[2] = false;
-    //            if (cells[i, j].hasWalls[1] && j > 0)
-    //                cells[i, j - 1].hasWalls[3] = false;
-    //        }
-    //}
-
     private void CreateMaze(Cell[,] cells)
     {
         GameObject walls = new GameObject();
@@ -217,6 +204,19 @@ public class RandomMazeGenerator : MonoBehaviour
             }
     }
 
+    public int GetScale()
+    {
+        return scale;
+    }
+
+    public void StartNextLevel()
+    {
+        width += 3;
+        length += 3;
+        PlayerPrefs.SetInt("width", width);
+        PlayerPrefs.SetInt("lenght", length);
+    }
+
     public class Cell
     {
         public bool[] hasWalls = new bool[4]; //Left,Down,Right,Up
@@ -232,17 +232,5 @@ public class RandomMazeGenerator : MonoBehaviour
         }
     }
 
-    public int GetScale()
-    {
-        return scale;
-    }
-
-    public void StartNextLevel()
-    {
-        width += 3;
-        length += 3;
-        PlayerPrefs.SetInt("width", width);
-        PlayerPrefs.SetInt("lenght", length);
-    }
 
 }
