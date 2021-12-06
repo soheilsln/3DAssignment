@@ -10,6 +10,7 @@ public class LoadingManager : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = false;
         StartCoroutine(LoadAsync());
     }
 

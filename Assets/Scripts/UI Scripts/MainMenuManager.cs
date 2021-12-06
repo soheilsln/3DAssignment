@@ -12,6 +12,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = false;
         if(!PlayerPrefs.HasKey("width") || !PlayerPrefs.HasKey("lenght"))
         {
             continueButton.interactable = false;
