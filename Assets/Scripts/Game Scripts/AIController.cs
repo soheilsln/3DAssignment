@@ -253,7 +253,7 @@ public class AIController : MonoBehaviour
             {
                 ChoosePathToExit();
             }
-            else if(!isWonGame)
+            else if (!isWonGame)
             {
                 WonGame();
             }
@@ -337,14 +337,21 @@ public class AIController : MonoBehaviour
 
     private IEnumerator Shoot(Transform destination, bool isPlayer)
     {
-        aimDestination = new Vector3(destination.position.x, transform.position.y, destination.position.z);
+        if (destination)
+            aimDestination = new Vector3(destination.position.x, transform.position.y, destination.position.z);
+
         animator.SetBool("Aim", true);
         yield return new WaitForSeconds(2f);
-        Vector3 offset = isPlayer ? Vector3.up : Vector3.zero;
-        Vector3 aimDir = ((destination.position + offset) - spawnBulletPosition.position).normalized;
-        GameObject bulletInstance = Instantiate(bullet, spawnBulletPosition.position, 
-            Quaternion.LookRotation(aimDir, Vector3.up));
-        Physics.IgnoreCollision(bulletInstance.GetComponent<Collider>(),GetComponent<Collider>());
+
+        if (destination)
+        {
+            Vector3 offset = isPlayer ? Vector3.up : Vector3.zero;
+            Vector3 aimDir = ((destination.position + offset) - spawnBulletPosition.position).normalized;
+            GameObject bulletInstance = Instantiate(bullet, spawnBulletPosition.position,
+                Quaternion.LookRotation(aimDir, Vector3.up));
+            Physics.IgnoreCollision(bulletInstance.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+
         animator.SetBool("Aim", false);
         reachedDestination = true;
         aimDestination = Vector3.zero;
@@ -366,7 +373,7 @@ public class AIController : MonoBehaviour
 
         if (playerInRange)
         {
-            if(Physics.Raycast(spawnBulletPosition.position, (playerPosition + Vector3.up) -
+            if (Physics.Raycast(spawnBulletPosition.position, (playerPosition + Vector3.up) -
                 spawnBulletPosition.position, out RaycastHit hit, 999f, shootLayerMask))
             {
                 if (hit.transform.CompareTag("Player"))
