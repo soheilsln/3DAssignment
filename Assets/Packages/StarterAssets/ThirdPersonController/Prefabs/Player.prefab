@@ -1037,7 +1037,7 @@ GameObject:
   - component: {fileID: 4416926081852918493}
   - component: {fileID: 1715289488}
   m_Layer: 0
-  m_Name: PlayerArmature
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1162,6 +1162,7 @@ MonoBehaviour:
   aim: 0
   shoot: 0
   punch: 0
+  bomb: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -1275,6 +1276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f2f96fd776f4a4785e9c3b687ce070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bombPrefab: {fileID: 625112572523098938, guid: 96e279f56b09e7b41ba90973eafcd8f7, type: 3}
   aimVirtualCamera: {fileID: 0}
   normalSensitivity: 1
   aimSensitivity: 0.5
@@ -1285,7 +1287,12 @@ MonoBehaviour:
   spawnBulletPosition: {fileID: 7174040152517193065}
   aimImage: {fileID: 0}
   shootCooldownTime: 10
+  shootTimeStamp: 0
   punchCooldownTime: 10
+  punchTimeStamp: 0
+  walkTime: 10
+  bombCooldownTime: 10
+  bombTimeStamp: 0
 --- !u!1 &4523139366846529165
 GameObject:
   m_ObjectHideFlags: 0

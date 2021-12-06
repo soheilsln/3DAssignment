@@ -23,18 +23,18 @@ public class ThirdPersonShooterController : MonoBehaviour
     private Transform spawnBulletPosition;
     [SerializeField]
     private GameObject aimImage;
-    [SerializeField]
-    private float shootCooldownTime = 10f;
-    private float shootTimeStamp = 0f;
-    [SerializeField]
-    private float punchCooldownTime = 10f;
-    private float punchTimeStamp = 0f;
+    public float shootCooldownTime = 10f;
+    [HideInInspector]
+    public float shootTimeStamp = 0f;
+    public float punchCooldownTime = 10f;
+    [HideInInspector]
+    public float punchTimeStamp = 0f;
     private bool isWalking = false;
     [SerializeField]
     private float walkTime = 10f;
-    [SerializeField]
-    private float bombCooldownTime = 10f;
-    private float bombTimeStamp = 0f;
+    public float bombCooldownTime = 10f;
+    [HideInInspector]
+    public float bombTimeStamp = 0f;
     private bool keyCollected = false;
 
     private ThirdPersonController thirdPersonController;

@@ -15,6 +15,7 @@ namespace StarterAssets
         public bool shoot;
         public bool punch;
         public bool bomb;
+        public bool pause;
 
         [Header("Movement Settings")]
         public bool analogMovement;
@@ -63,6 +64,11 @@ namespace StarterAssets
         {
             BombInput(value.isPressed);
         }
+
+        public void OnPause(InputValue value)
+        {
+            PauseInput(value.isPressed);
+        }
 #else
 	// old input sys if we do decide to have it (most likely wont)...
 #endif
@@ -104,6 +110,11 @@ namespace StarterAssets
         {
             if (!aim)
                 bomb = newBombState;
+        }
+
+        public void PauseInput(bool newPauseState)
+        {
+            pause = newPauseState;
         }
 
 #if !UNITY_IOS || !UNITY_ANDROID

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Loading : MonoBehaviour
+public class LoadingManager : MonoBehaviour
 {
     public Text percentage;
 
