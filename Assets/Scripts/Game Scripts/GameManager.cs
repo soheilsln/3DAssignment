@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
     private void InstantiateEnemies()
     {
         enemiesLocations = SetEnemiesLocations();
-        GameObject enemies = Instantiate(new GameObject());
+        GameObject enemies = new GameObject();
         enemies.name = "Enemies";
         foreach (int[] enemyLocation in enemiesLocations)
         {
