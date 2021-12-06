@@ -10,7 +10,7 @@ public class GameUIManager : MonoBehaviour
     public Text shootCoolDown;
     public Text bombCoolDown;
     public Text punchCoolDown;
-    
+
     public GameObject UIPanel;
     // id : 1
     public GameObject keyRequiredPanel;
@@ -41,16 +41,16 @@ public class GameUIManager : MonoBehaviour
 
     private void Update()
     {
-        if(starterAssetsInputs.pause)
+        if (starterAssetsInputs.pause)
         {
             if (!pausePanel.activeSelf && !UIPanel.activeSelf)
             {
                 ActiveUIPanelObjects(4);
             }
-            else if(pausePanel.activeSelf)
+            else if (pausePanel.activeSelf)
             {
-                UIPanel.SetActive(false);
                 pausePanel.SetActive(false);
+                UIPanel.SetActive(false);
             }
             starterAssetsInputs.pause = false;
         }
@@ -91,32 +91,32 @@ public class GameUIManager : MonoBehaviour
         switch (id)
         {
             case 1:
-                eventSystem.firstSelectedGameObject = keyRequiredPanelFirstSelected;
                 keyRequiredPanel.SetActive(true);
                 continuePanel.SetActive(false);
                 failedPanel.SetActive(false);
                 pausePanel.SetActive(false);
+                eventSystem.SetSelectedGameObject(keyRequiredPanelFirstSelected, new BaseEventData(eventSystem));
                 break;
             case 2:
-                eventSystem.firstSelectedGameObject = continuePanelFirstSelected;
                 keyRequiredPanel.SetActive(false);
                 continuePanel.SetActive(true);
                 failedPanel.SetActive(false);
                 pausePanel.SetActive(false);
+                eventSystem.SetSelectedGameObject(continuePanelFirstSelected, new BaseEventData(eventSystem));
                 break;
             case 3:
-                eventSystem.firstSelectedGameObject = failedPanelFirstSelected;
                 keyRequiredPanel.SetActive(false);
                 continuePanel.SetActive(false);
                 failedPanel.SetActive(true);
                 pausePanel.SetActive(false);
+                eventSystem.SetSelectedGameObject(failedPanelFirstSelected, new BaseEventData(eventSystem));
                 break;
             case 4:
-                eventSystem.firstSelectedGameObject = pausePanelFirstSelected;
                 keyRequiredPanel.SetActive(false);
                 continuePanel.SetActive(false);
                 failedPanel.SetActive(false);
                 pausePanel.SetActive(true);
+                eventSystem.SetSelectedGameObject(pausePanelFirstSelected, new BaseEventData(eventSystem));
                 break;
             default:
                 break;
